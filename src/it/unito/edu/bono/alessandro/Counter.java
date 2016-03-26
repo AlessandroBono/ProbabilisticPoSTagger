@@ -52,8 +52,6 @@ public class Counter {
             }
             oldTag = tag;
         }
-        System.out.println(transitionCounter);
-        System.out.println(emissionCounter);
     }
 
     public SparseMatrix getEmissionMatrix() {

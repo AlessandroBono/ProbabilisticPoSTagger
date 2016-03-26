@@ -31,7 +31,13 @@ public class PoSTaggerMain {
      */
     public static void main(String[] args) {
         try {
-            new Counter("data/ud12_for_POS_TAGGING-160229-train.txt").count();
+            PoSTaggerAbstract posTagger = new BaseLinePoSTagger();
+            posTagger.setTraningSet("data/ud12_for_POS_TAGGING-160229-train.txt");
+            posTagger.train();
+            Evaluator evaluator = new Evaluator();
+            evaluator.setPoSTagger(posTagger);
+            evaluator.setTestSet("data/ud12_for_POS_TAGGING-160229-test.txt");
+            evaluator.evaluate();
         } catch (IOException ex) {
             Logger.getLogger(PoSTaggerMain.class.getName()).log(Level.SEVERE, null, ex);
         }
