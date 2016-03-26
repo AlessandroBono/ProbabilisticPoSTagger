@@ -17,7 +17,6 @@
 package it.unito.edu.bono.alessandro;
 
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 
@@ -35,7 +34,7 @@ public class Counter {
         this.filePath = filePath;
     }
 
-    public void count() throws FileNotFoundException, IOException {
+    public void count() throws IOException {
         String line;
         String oldTag = "START";
         String tag;
