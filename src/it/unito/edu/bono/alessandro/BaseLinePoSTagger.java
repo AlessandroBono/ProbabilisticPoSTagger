@@ -19,44 +19,41 @@ package it.unito.edu.bono.alessandro;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
 
 /**
  *
  * @author Alessandro Bono <alessandro.bono@edu.unito.it>
  */
-public class Counter {
+public class BaseLinePoSTagger extends PoSTaggerAbstract {
 
-    private String filePath;
-    private SparseMatrix transitionCounter = new SparseMatrix();
-    private SparseMatrix emissionCounter = new SparseMatrix();
+    private static final String DEFAULT_TAG = "NOUN";
 
-    public Counter(String filePath) {
-        this.filePath = filePath;
-    }
-
-    public void count() throws IOException {
+    @Override
+    public void startTagging() throws IOException {
         String line;
-        String oldTag = "START";
-        String tag;
-        BufferedReader reader = new BufferedReader(new FileReader(filePath));
+        result = new ArrayList<>();
+        BufferedReader reader = new BufferedReader(new FileReader(testSetPath));
         while ((line = reader.readLine()) != null) {
             if (line.length() > 0) {
-                String[] temp = line.split("\t");
-                String word = temp[0];
-                tag = temp[1];
-                emissionCounter.increment(tag, word);
-                transitionCounter.increment(oldTag, tag);
-            } else { // è finita la frase
-                transitionCounter.increment(oldTag, "END");
-                tag = "START";
+                String word = line.split("\t")[0];
+                String tag = getMostFrequentTag(word);
+                result.add(new Pair(word, tag));
             }
-            oldTag = tag;
         }
-        System.out.println(transitionCounter);
-        System.out.println(emissionCounter);
     }
 
-    public SparseMatrix getEmissionMatrix() {
-        return emissionCounter;
+    private String getMostFrequentTag(String word) {
+        String mostFreqTag = "";
+        Integer maxValue = 0;
+        SparseMatrix emissionMatrix = counter.getEmissionMatrix();
+        for (String tag : emissionMatrix.getRows()) {
+            Integer value = emissionMatrix.get(tag, word);
+            if (value > maxValue) {
+                maxValue = value;
+                mostFreqTag = tag;
+            }
+        }
+        return maxValue != 0 ? mostFreqTag : DEFAULT_TAG;
     }
 }
