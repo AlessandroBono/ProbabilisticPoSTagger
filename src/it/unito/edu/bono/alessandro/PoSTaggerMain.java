@@ -16,6 +16,10 @@
  */
 package it.unito.edu.bono.alessandro;
 
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
  * @author Alessandro Bono <alessandro.bono@edu.unito.it>
@@ -26,7 +30,11 @@ public class PoSTaggerMain {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
+        try {
+            new Counter("data/ud12_for_POS_TAGGING-160229-train.txt").count();
+        } catch (IOException ex) {
+            Logger.getLogger(PoSTaggerMain.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
 }
