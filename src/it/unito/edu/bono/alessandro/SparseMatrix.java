@@ -17,6 +17,8 @@
 package it.unito.edu.bono.alessandro;
 
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  *
@@ -50,6 +52,19 @@ public class SparseMatrix {
     public void increment(String row, String col) {
         Integer oldValue = get(row, col);
         set(row, col, oldValue + 1);
+    }
+
+    public Set<String> getRows() {
+        return matrix.keySet();
+    }
+
+    public Set<String> getColumns() {
+        Set<String> cols = new HashSet<>();
+        Set<String> rows = matrix.keySet();
+        for (String row : rows) {
+            cols.addAll(matrix.get(row).keySet());
+        }
+        return cols;
     }
 
     @Override
