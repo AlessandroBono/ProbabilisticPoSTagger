@@ -25,13 +25,12 @@ import java.util.ArrayList;
  */
 public abstract class PoSTaggerAbstract implements PoSTagger {
 
-    protected String trainingSetPath;
     protected String devSetPath;
-    protected Counter counter;
+    protected Counter counter = new Counter();
 
     @Override
-    public void setTraningSet(String traningSetPath) {
-        this.trainingSetPath = traningSetPath;
+    public void setTraningSet(String trainingSetPath) {
+        counter.setFilePath(trainingSetPath);
     }
 
     @Override
@@ -40,8 +39,12 @@ public abstract class PoSTaggerAbstract implements PoSTagger {
     }
 
     @Override
+    public void setNormalizer(Normalizer normalizer) {
+        counter.setNormalizer(normalizer);
+    }
+
+    @Override
     public void train() throws IOException {
-        counter = new Counter(trainingSetPath);
         counter.count();
     }
 

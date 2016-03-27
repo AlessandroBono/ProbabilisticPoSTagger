@@ -29,6 +29,8 @@ public interface PoSTagger {
 
     public void setdDevSet(String devSetPath);
 
+    public void setNormalizer(Normalizer normalizer);
+
     public void train() throws IOException;
 
     public ArrayList<Pair<String, String>> tagPhrase(ArrayList<String> phrase) throws IOException;

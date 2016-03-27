@@ -28,13 +28,18 @@ import java.util.HashMap;
  */
 public class Counter {
 
-    private String filePath;
+    private String filePath = null;
+    private Normalizer normalizer = null;
     private HashMap<String, Integer> tagsCounter = new HashMap<>();
     private SparseMatrix transitionMatrix = new SparseMatrix();
     private SparseMatrix emissionMatrix = new SparseMatrix();
 
-    public Counter(String filePath) {
+    public void setFilePath(String filePath) {
         this.filePath = filePath;
+    }
+
+    public void setNormalizer(Normalizer normalizer) {
+        this.normalizer = normalizer;
     }
 
     public void count() throws IOException {
@@ -47,6 +52,9 @@ public class Counter {
                 String[] temp = line.split("\t");
                 String word = temp[0];
                 tag = temp[1];
+                if (normalizer != null) {
+                    word = normalizer.normalize(word);
+                }
                 emissionMatrix.increment(tag, word);
                 transitionMatrix.increment(oldTag, tag);
             } else { // è finita la frase
@@ -61,6 +69,9 @@ public class Counter {
     }
 
     public double getEmissionProbability(String tag, String word) {
+        if (normalizer != null) {
+            word = normalizer.normalize(word);
+        }
         return emissionMatrix.get(tag, word) / (double) tagsCounter.get(tag);
     }
 
@@ -82,6 +93,9 @@ public class Counter {
     }
 
     public String getMostFrequentTag(String word, String defaultTag) {
+        if (normalizer != null) {
+            word = normalizer.normalize(word);
+        }
         String mostFreqTag = "";
         int maxValue = 0;
         for (String tag : emissionMatrix.getRows()) {
