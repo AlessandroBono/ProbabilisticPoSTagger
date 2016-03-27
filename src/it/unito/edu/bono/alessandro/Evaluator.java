@@ -29,6 +29,7 @@ public class Evaluator {
 
     private int total = 0;
     private int correct = 0;
+    private long testTime = 0;
     private String testSetPath;
     private String devSetPath;
     private PoSTagger posTagger;
@@ -58,14 +59,16 @@ public class Evaluator {
                 phrase.add(word);
                 correctTags.add(new Pair(word, tag));
             } else {
+                long startTime = System.nanoTime();
                 ArrayList<Pair<String, String>> resultTags = posTagger.tagPhrase(phrase);
+                long endTime = System.nanoTime();
+                testTime += endTime - startTime;
                 checkResultPerformance(resultTags, correctTags);
                 phrase = new ArrayList<>();
                 correctTags = new ArrayList<>();
             }
         }
-
-        System.out.println("Totali: " + total + " " + "Corretti: " + correct);
+        printResults();
     }
 
     private void checkResultPerformance(ArrayList<Pair<String, String>> resultTags, ArrayList<Pair<String, String>> correctTags) {
@@ -83,5 +86,12 @@ public class Evaluator {
             }
             total++;
         }
+    }
+
+    private void printResults() {
+        System.out.println("### " + posTagger.getClass().getName() + " ###");
+        System.out.println("Corretti: " + correct + "/" + total);
+        System.out.println("Percentuale: " + correct / (float) total);
+        System.out.println("Tempo Impiegato: " + testTime / 1000000000.0 + " secondi");
     }
 }
