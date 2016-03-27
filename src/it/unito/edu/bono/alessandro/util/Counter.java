@@ -30,6 +30,7 @@ import java.util.HashMap;
 public class Counter {
 
     private String filePath = null;
+    private String smoothType = "";
     private Normalizer normalizer = null;
     private HashMap<String, Integer> tagsCounter = new HashMap<>();
     private SparseMatrix transitionMatrix = new SparseMatrix();
@@ -41,6 +42,10 @@ public class Counter {
 
     public void setNormalizer(Normalizer normalizer) {
         this.normalizer = normalizer;
+    }
+
+    public void setSmoothType(String smoothType) {
+        this.smoothType = smoothType;
     }
 
     public void count() throws IOException {
@@ -75,7 +80,7 @@ public class Counter {
         }
         int emissionCount = emissionMatrix.get(tag, word);
         if (emissionCount == 0) {
-            return Math.log(Double.MIN_VALUE);
+            return Math.log(smoothEmissionProbability(tag, word));
         }
         return Math.log(emissionCount) - Math.log(tagsCounter.get(tag));
     }
@@ -83,7 +88,7 @@ public class Counter {
     public double getTransitionProbability(String tag1, String tag2) {
         double transitionCounter = transitionMatrix.get(tag1, tag2);
         if (transitionCounter == 0) {
-            return Math.log(Double.MIN_VALUE);
+            return Math.log(smoothTransitionProbability(tag1, tag2));
         }
         return Math.log(transitionCounter) - Math.log(tagsCounter.get(tag1));
     }
@@ -115,5 +120,23 @@ public class Counter {
             }
         }
         return maxValue != 0 ? mostFreqTag : defaultTag;
+    }
+
+    private double smoothTransitionProbability(String tag1, String tag2) {
+        return Double.MIN_VALUE;
+    }
+
+    private double smoothEmissionProbability(String tag, String word) {
+        switch (smoothType) {
+            case "NTAGS":
+                return Double.MIN_VALUE;
+            case "STATISTIC":
+                return Double.MIN_VALUE;
+            case "MORPHIT":
+                return Double.MIN_VALUE;
+            case "MINVALUE":
+            default:
+                return Double.MIN_VALUE;
+        }
     }
 }

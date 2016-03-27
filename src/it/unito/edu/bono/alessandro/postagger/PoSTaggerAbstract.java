@@ -47,6 +47,11 @@ public abstract class PoSTaggerAbstract implements PoSTagger {
     }
 
     @Override
+    public void setSmoothType(String smoothType) {
+        counter.setSmoothType(smoothType);
+    }
+
+    @Override
     public void train() throws IOException {
         counter.count();
     }

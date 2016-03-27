@@ -38,6 +38,7 @@ public class Main {
             PoSTagger posTagger = new ViterbiPoSTagger();
             posTagger.setTraningSet("data/ud12_for_POS_TAGGING-160229-train.txt");
             posTagger.setNormalizer(new CapitalizeNormalizer());
+            posTagger.setSmoothType("MINVALUE");
             posTagger.train();
             Evaluator evaluator = new Evaluator();
             evaluator.setPoSTagger(posTagger);

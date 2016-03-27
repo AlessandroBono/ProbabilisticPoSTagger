@@ -29,6 +29,8 @@ public interface PoSTagger {
 
     public void setTraningSet(String traningSetPath);
 
+    public void setSmoothType(String smoothType);
+
     public void setdDevSet(String devSetPath);
 
     public void setNormalizer(Normalizer normalizer);
