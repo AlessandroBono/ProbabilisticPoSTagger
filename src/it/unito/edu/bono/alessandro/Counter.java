@@ -54,7 +54,16 @@ public class Counter {
         }
     }
 
-    public SparseMatrix getEmissionMatrix() {
-        return emissionMatrix;
+    public String getMostFrequentTag(String word, String defaultTag) {
+        String mostFreqTag = "";
+        Integer maxValue = 0;
+        for (String tag : emissionMatrix.getRows()) {
+            Integer value = emissionMatrix.get(tag, word);
+            if (value > maxValue) {
+                maxValue = value;
+                mostFreqTag = tag;
+            }
+        }
+        return maxValue != 0 ? mostFreqTag : defaultTag;
     }
 }

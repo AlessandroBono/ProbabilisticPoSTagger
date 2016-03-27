@@ -31,23 +31,9 @@ public class BaseLinePoSTagger extends PoSTaggerAbstract {
     public ArrayList<Pair<String, String>> tagPhrase(ArrayList<String> phrase) throws IOException {
         ArrayList<Pair<String, String>> output = new ArrayList<>();
         for (String word : phrase) {
-            String tag = getMostFrequentTag(word);
+            String tag = counter.getMostFrequentTag(word, DEFAULT_TAG);
             output.add(new Pair(word, tag));
         }
         return output;
-    }
-
-    private String getMostFrequentTag(String word) {
-        String mostFreqTag = "";
-        Integer maxValue = 0;
-        SparseMatrix emissionMatrix = counter.getEmissionMatrix();
-        for (String tag : emissionMatrix.getRows()) {
-            Integer value = emissionMatrix.get(tag, word);
-            if (value > maxValue) {
-                maxValue = value;
-                mostFreqTag = tag;
-            }
-        }
-        return maxValue != 0 ? mostFreqTag : DEFAULT_TAG;
     }
 }
