@@ -129,7 +129,7 @@ public class Counter {
     private double smoothEmissionProbability(String tag, String word) {
         switch (smoothType) {
             case "NTAGS":
-                return Double.MIN_VALUE;
+                return 1.0 / tagsCounter.size();
             case "STATISTIC":
                 return Double.MIN_VALUE;
             case "MORPHIT":
