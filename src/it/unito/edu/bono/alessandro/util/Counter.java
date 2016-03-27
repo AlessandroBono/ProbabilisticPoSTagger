@@ -75,17 +75,17 @@ public class Counter {
         }
         int emissionCount = emissionMatrix.get(tag, word);
         if (emissionCount == 0) {
-            return Double.MIN_VALUE;
+            return Math.log(Double.MIN_VALUE);
         }
-        return emissionCount / (double) tagsCounter.get(tag);
+        return Math.log(emissionCount) - Math.log(tagsCounter.get(tag));
     }
 
     public double getTransitionProbability(String tag1, String tag2) {
         double transitionCounter = transitionMatrix.get(tag1, tag2);
         if (transitionCounter == 0) {
-            return Double.MIN_VALUE;
+            return Math.log(Double.MIN_VALUE);
         }
-        return transitionCounter / (double) tagsCounter.get(tag1);
+        return Math.log(transitionCounter) - Math.log(tagsCounter.get(tag1));
     }
 
     public ArrayList<String> getTags() {
