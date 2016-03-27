@@ -14,8 +14,9 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package it.unito.edu.bono.alessandro;
+package it.unito.edu.bono.alessandro.util;
 
+import it.unito.edu.bono.alessandro.normalizer.Normalizer;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;

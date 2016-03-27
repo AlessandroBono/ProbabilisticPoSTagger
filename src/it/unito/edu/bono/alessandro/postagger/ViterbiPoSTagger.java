@@ -14,8 +14,10 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package it.unito.edu.bono.alessandro;
+package it.unito.edu.bono.alessandro.postagger;
 
+import it.unito.edu.bono.alessandro.util.CustomTag;
+import it.unito.edu.bono.alessandro.util.Pair;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;

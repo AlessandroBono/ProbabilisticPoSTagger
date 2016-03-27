@@ -14,26 +14,13 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package it.unito.edu.bono.alessandro;
-
-import java.io.IOException;
-import java.util.ArrayList;
+package it.unito.edu.bono.alessandro.normalizer;
 
 /**
  *
  * @author Alessandro Bono <alessandro.bono@edu.unito.it>
  */
-public class BaseLinePoSTagger extends PoSTaggerAbstract {
+public interface Normalizer {
 
-    private static final String DEFAULT_TAG = "NOUN";
-
-    @Override
-    public ArrayList<Pair<String, String>> tagPhrase(ArrayList<String> phrase) throws IOException {
-        ArrayList<Pair<String, String>> output = new ArrayList<>();
-        for (String word : phrase) {
-            String tag = counter.getMostFrequentTag(word, DEFAULT_TAG);
-            output.add(new Pair(word, tag));
-        }
-        return output;
-    }
+    public String normalize(String word);
 }

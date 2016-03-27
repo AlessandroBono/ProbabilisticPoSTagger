@@ -16,6 +16,10 @@
  */
 package it.unito.edu.bono.alessandro;
 
+import it.unito.edu.bono.alessandro.normalizer.CapitalizeNormalizer;
+import it.unito.edu.bono.alessandro.postagger.PoSTagger;
+import it.unito.edu.bono.alessandro.postagger.ViterbiPoSTagger;
+import it.unito.edu.bono.alessandro.util.Evaluator;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -24,7 +28,7 @@ import java.util.logging.Logger;
  *
  * @author Alessandro Bono <alessandro.bono@edu.unito.it>
  */
-public class PoSTaggerMain {
+public class Main {
 
     /**
      * @param args the command line arguments
@@ -40,7 +44,7 @@ public class PoSTaggerMain {
             evaluator.setTestSet("data/ud12_for_POS_TAGGING-160229-test.txt");
             evaluator.evaluate();
         } catch (IOException ex) {
-            Logger.getLogger(PoSTaggerMain.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

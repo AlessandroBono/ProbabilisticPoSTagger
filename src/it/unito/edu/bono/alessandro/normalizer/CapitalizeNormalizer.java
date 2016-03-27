@@ -14,25 +14,17 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package it.unito.edu.bono.alessandro;
-
-import java.io.IOException;
-import java.util.ArrayList;
+package it.unito.edu.bono.alessandro.normalizer;
 
 /**
  *
  * @author Alessandro Bono <alessandro.bono@edu.unito.it>
  */
-public interface PoSTagger {
+public class CapitalizeNormalizer implements Normalizer {
 
-    public void setTraningSet(String traningSetPath);
-
-    public void setdDevSet(String devSetPath);
-
-    public void setNormalizer(Normalizer normalizer);
-
-    public void train() throws IOException;
-
-    public ArrayList<Pair<String, String>> tagPhrase(ArrayList<String> phrase) throws IOException;
+    @Override
+    public String normalize(String word) {
+        return word.toUpperCase();
+    }
 
 }
