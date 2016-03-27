@@ -31,7 +31,7 @@ public class PoSTaggerMain {
      */
     public static void main(String[] args) {
         try {
-            PoSTaggerAbstract posTagger = new BaseLinePoSTagger();
+            PoSTaggerAbstract posTagger = new ViterbiPoSTagger();
             posTagger.setTraningSet("data/ud12_for_POS_TAGGING-160229-train.txt");
             posTagger.train();
             Evaluator evaluator = new Evaluator();
