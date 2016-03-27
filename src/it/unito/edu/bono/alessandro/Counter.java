@@ -27,8 +27,8 @@ import java.io.IOException;
 public class Counter {
 
     private String filePath;
-    private SparseMatrix transitionCounter = new SparseMatrix();
-    private SparseMatrix emissionCounter = new SparseMatrix();
+    private SparseMatrix transitionMatrix = new SparseMatrix();
+    private SparseMatrix emissionMatrix = new SparseMatrix();
 
     public Counter(String filePath) {
         this.filePath = filePath;
@@ -44,10 +44,10 @@ public class Counter {
                 String[] temp = line.split("\t");
                 String word = temp[0];
                 tag = temp[1];
-                emissionCounter.increment(tag, word);
-                transitionCounter.increment(oldTag, tag);
+                emissionMatrix.increment(tag, word);
+                transitionMatrix.increment(oldTag, tag);
             } else { // è finita la frase
-                transitionCounter.increment(oldTag, "END");
+                transitionMatrix.increment(oldTag, "END");
                 tag = "START";
             }
             oldTag = tag;
@@ -55,6 +55,6 @@ public class Counter {
     }
 
     public SparseMatrix getEmissionMatrix() {
-        return emissionCounter;
+        return emissionMatrix;
     }
 }
