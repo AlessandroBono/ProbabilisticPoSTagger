@@ -27,8 +27,8 @@ import java.util.ArrayList;
  */
 public class Evaluator {
 
-    private Integer total = 0;
-    private Integer correct = 0;
+    private int total = 0;
+    private int correct = 0;
     private String testSetPath;
     private String devSetPath;
     private PoSTagger posTagger;

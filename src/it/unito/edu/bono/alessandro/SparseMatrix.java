@@ -50,7 +50,7 @@ public class SparseMatrix {
     }
 
     public void increment(String row, String col) {
-        Integer oldValue = get(row, col);
+        int oldValue = get(row, col);
         set(row, col, oldValue + 1);
     }
 

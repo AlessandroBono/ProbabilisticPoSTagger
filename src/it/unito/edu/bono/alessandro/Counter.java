@@ -83,7 +83,7 @@ public class Counter {
 
     public String getMostFrequentTag(String word, String defaultTag) {
         String mostFreqTag = "";
-        Integer maxValue = 0;
+        int maxValue = 0;
         for (String tag : emissionMatrix.getRows()) {
             Integer value = emissionMatrix.get(tag, word);
             if (value > maxValue) {
