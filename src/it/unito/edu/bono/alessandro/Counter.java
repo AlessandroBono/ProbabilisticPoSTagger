@@ -19,6 +19,8 @@ package it.unito.edu.bono.alessandro;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  *
@@ -27,6 +29,7 @@ import java.io.IOException;
 public class Counter {
 
     private String filePath;
+    private HashMap<String, Integer> tagsCounter = new HashMap<>();
     private SparseMatrix transitionMatrix = new SparseMatrix();
     private SparseMatrix emissionMatrix = new SparseMatrix();
 
@@ -47,10 +50,34 @@ public class Counter {
                 emissionMatrix.increment(tag, word);
                 transitionMatrix.increment(oldTag, tag);
             } else { // è finita la frase
-                transitionMatrix.increment(oldTag, CustomTag.END);
+                tag = CustomTag.END;
+                incrementTagsCounter(tagsCounter, tag);
+                transitionMatrix.increment(oldTag, tag);
                 tag = CustomTag.START;
             }
+            incrementTagsCounter(tagsCounter, tag);
             oldTag = tag;
+        }
+    }
+
+    public double getEmissionProbability(String tag, String word) {
+        return emissionMatrix.get(tag, word) / (double) tagsCounter.get(tag);
+    }
+
+    public double getTransitionProbability(String tag1, String tag2) {
+        return transitionMatrix.get(tag1, tag2) / (double) tagsCounter.get(tag1);
+    }
+
+    public ArrayList<String> getTags() {
+        return new ArrayList<>(tagsCounter.keySet());
+    }
+
+    private void incrementTagsCounter(HashMap<String, Integer> tagsCounter, String tag) {
+        if (!tagsCounter.containsKey(tag)) {
+            tagsCounter.put(tag, 1);
+        } else {
+            Integer oldValue = tagsCounter.get(tag);
+            tagsCounter.put(tag, oldValue + 1);
         }
     }
 
