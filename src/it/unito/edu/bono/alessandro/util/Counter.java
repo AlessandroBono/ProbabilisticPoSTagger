@@ -73,11 +73,19 @@ public class Counter {
         if (normalizer != null) {
             word = normalizer.normalize(word);
         }
-        return emissionMatrix.get(tag, word) / (double) tagsCounter.get(tag);
+        int emissionCount = emissionMatrix.get(tag, word);
+        if (emissionCount == 0) {
+            return Double.MIN_VALUE;
+        }
+        return emissionCount / (double) tagsCounter.get(tag);
     }
 
     public double getTransitionProbability(String tag1, String tag2) {
-        return transitionMatrix.get(tag1, tag2) / (double) tagsCounter.get(tag1);
+        double transitionCounter = transitionMatrix.get(tag1, tag2);
+        if (transitionCounter == 0) {
+            return Double.MIN_VALUE;
+        }
+        return transitionCounter / (double) tagsCounter.get(tag1);
     }
 
     public ArrayList<String> getTags() {
