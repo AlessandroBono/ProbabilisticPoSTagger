@@ -36,7 +36,7 @@ public class Counter {
 
     public void count() throws IOException {
         String line;
-        String oldTag = "START";
+        String oldTag = CustomTag.START;
         String tag;
         BufferedReader reader = new BufferedReader(new FileReader(filePath));
         while ((line = reader.readLine()) != null) {
@@ -47,8 +47,8 @@ public class Counter {
                 emissionMatrix.increment(tag, word);
                 transitionMatrix.increment(oldTag, tag);
             } else { // è finita la frase
-                transitionMatrix.increment(oldTag, "END");
-                tag = "START";
+                transitionMatrix.increment(oldTag, CustomTag.END);
+                tag = CustomTag.START;
             }
             oldTag = tag;
         }
