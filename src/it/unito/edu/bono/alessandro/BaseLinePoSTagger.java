@@ -16,8 +16,6 @@
  */
 package it.unito.edu.bono.alessandro;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -30,17 +28,13 @@ public class BaseLinePoSTagger extends PoSTaggerAbstract {
     private static final String DEFAULT_TAG = "NOUN";
 
     @Override
-    public void startTagging() throws IOException {
-        String line;
-        result = new ArrayList<>();
-        BufferedReader reader = new BufferedReader(new FileReader(testSetPath));
-        while ((line = reader.readLine()) != null) {
-            if (line.length() > 0) {
-                String word = line.split("\t")[0];
-                String tag = getMostFrequentTag(word);
-                result.add(new Pair(word, tag));
-            }
+    public ArrayList<Pair<String, String>> tagPhrase(ArrayList<String> phrase) throws IOException {
+        ArrayList<Pair<String, String>> output = new ArrayList<>();
+        for (String word : phrase) {
+            String tag = getMostFrequentTag(word);
+            output.add(new Pair(word, tag));
         }
+        return output;
     }
 
     private String getMostFrequentTag(String word) {

@@ -27,8 +27,10 @@ import java.util.ArrayList;
  */
 public class Evaluator {
 
-    protected String testSetPath;
-    protected String devSetPath;
+    private Integer total = 0;
+    private Integer correct = 0;
+    private String testSetPath;
+    private String devSetPath;
     private PoSTaggerAbstract posTagger;
 
     public void setPoSTagger(PoSTaggerAbstract tagger) {
@@ -44,17 +46,34 @@ public class Evaluator {
     }
 
     public void evaluate() throws IOException {
-        posTagger.setTestSet(testSetPath);
-        posTagger.startTagging();
-        ArrayList<Pair<String, String>> result = posTagger.getResult();
-        ArrayList<Pair<String, String>> correctTags = getCorrectTags();
-        if (result.size() != correctTags.size()) {
+        String line;
+        BufferedReader reader = new BufferedReader(new FileReader(testSetPath));
+        ArrayList<String> phrase = new ArrayList<>();
+        ArrayList<Pair<String, String>> correctTags = new ArrayList<>();
+        while ((line = reader.readLine()) != null) {
+            if (line.length() > 0) {
+                String[] temp = line.split("\t");
+                String word = temp[0];
+                String tag = temp[1];
+                phrase.add(word);
+                correctTags.add(new Pair(word, tag));
+            } else {
+                ArrayList<Pair<String, String>> resultTags = posTagger.tagPhrase(phrase);
+                checkResultPerformance(resultTags, correctTags);
+                phrase = new ArrayList<>();
+                correctTags = new ArrayList<>();
+            }
+        }
+
+        System.out.println("Totali: " + total + " " + "Corretti: " + correct);
+    }
+
+    private void checkResultPerformance(ArrayList<Pair<String, String>> resultTags, ArrayList<Pair<String, String>> correctTags) {
+        if (resultTags.size() != correctTags.size()) {
             throw new IllegalArgumentException("Test set con dimensioni diverse");
         }
-        Integer total = 0;
-        Integer correct = 0;
-        for (int i = 0; i < result.size(); i++) {
-            Pair<String, String> resultPair = result.get(i);
+        for (int i = 0; i < resultTags.size(); i++) {
+            Pair<String, String> resultPair = resultTags.get(i);
             Pair<String, String> correctPair = correctTags.get(i);
             if (!resultPair.getFirst().equals(correctPair.getFirst())) {
                 throw new IllegalArgumentException("Test set non correttamente allineati");
@@ -64,21 +83,5 @@ public class Evaluator {
             }
             total++;
         }
-        System.out.println("Totali: " + total + " " + "Corretti: " + correct);
-    }
-
-    public ArrayList<Pair<String, String>> getCorrectTags() throws IOException {
-        String line;
-        ArrayList<Pair<String, String>> correct = new ArrayList<>();
-        BufferedReader reader = new BufferedReader(new FileReader(testSetPath));
-        while ((line = reader.readLine()) != null) {
-            if (line.length() > 0) {
-                String[] temp = line.split("\t");
-                String word = temp[0];
-                String tag = temp[1];
-                correct.add(new Pair<>(word, tag));
-            }
-        }
-        return correct;
     }
 }

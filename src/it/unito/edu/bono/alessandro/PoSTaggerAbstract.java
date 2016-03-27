@@ -25,18 +25,12 @@ import java.util.ArrayList;
  */
 public abstract class PoSTaggerAbstract {
 
-    protected String testSetPath;
     protected String trainingSetPath;
     protected String devSetPath;
     protected Counter counter;
-    protected ArrayList<Pair<String, String>> result;
 
     public void setTraningSet(String traningSetPath) {
         this.trainingSetPath = traningSetPath;
-    }
-
-    public void setTestSet(String testSetPath) {
-        this.testSetPath = testSetPath;
     }
 
     public void setdDevSet(String devSetPath) {
@@ -48,10 +42,6 @@ public abstract class PoSTaggerAbstract {
         counter.count();
     }
 
-    public ArrayList<Pair<String, String>> getResult() {
-        return result;
-    }
-
-    public abstract void startTagging() throws IOException;
+    public abstract ArrayList<Pair<String, String>> tagPhrase(ArrayList<String> phrase) throws IOException;
 
 }
