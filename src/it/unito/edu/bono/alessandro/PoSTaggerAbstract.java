@@ -23,25 +23,29 @@ import java.util.ArrayList;
  *
  * @author Alessandro Bono <alessandro.bono@edu.unito.it>
  */
-public abstract class PoSTaggerAbstract {
+public abstract class PoSTaggerAbstract implements PoSTagger {
 
     protected String trainingSetPath;
     protected String devSetPath;
     protected Counter counter;
 
+    @Override
     public void setTraningSet(String traningSetPath) {
         this.trainingSetPath = traningSetPath;
     }
 
+    @Override
     public void setdDevSet(String devSetPath) {
         this.devSetPath = devSetPath;
     }
 
+    @Override
     public void train() throws IOException {
         counter = new Counter(trainingSetPath);
         counter.count();
     }
 
+    @Override
     public abstract ArrayList<Pair<String, String>> tagPhrase(ArrayList<String> phrase) throws IOException;
 
 }

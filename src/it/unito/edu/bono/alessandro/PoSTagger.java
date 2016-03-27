@@ -17,30 +17,20 @@
 package it.unito.edu.bono.alessandro;
 
 import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.ArrayList;
 
 /**
  *
  * @author Alessandro Bono <alessandro.bono@edu.unito.it>
  */
-public class PoSTaggerMain {
+public interface PoSTagger {
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) {
-        try {
-            PoSTagger posTagger = new ViterbiPoSTagger();
-            posTagger.setTraningSet("data/ud12_for_POS_TAGGING-160229-train.txt");
-            posTagger.train();
-            Evaluator evaluator = new Evaluator();
-            evaluator.setPoSTagger(posTagger);
-            evaluator.setTestSet("data/ud12_for_POS_TAGGING-160229-test.txt");
-            evaluator.evaluate();
-        } catch (IOException ex) {
-            Logger.getLogger(PoSTaggerMain.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
+    public void setTraningSet(String traningSetPath);
+
+    public void setdDevSet(String devSetPath);
+
+    public void train() throws IOException;
+
+    public ArrayList<Pair<String, String>> tagPhrase(ArrayList<String> phrase) throws IOException;
 
 }

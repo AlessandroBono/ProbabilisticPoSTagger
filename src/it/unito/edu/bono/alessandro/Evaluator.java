@@ -31,9 +31,9 @@ public class Evaluator {
     private Integer correct = 0;
     private String testSetPath;
     private String devSetPath;
-    private PoSTaggerAbstract posTagger;
+    private PoSTagger posTagger;
 
-    public void setPoSTagger(PoSTaggerAbstract tagger) {
+    public void setPoSTagger(PoSTagger tagger) {
         this.posTagger = tagger;
     }
 
