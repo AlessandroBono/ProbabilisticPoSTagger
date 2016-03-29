@@ -19,6 +19,7 @@ package it.unito.edu.bono.alessandro;
 import it.unito.edu.bono.alessandro.normalizer.CapitalizeNormalizer;
 import it.unito.edu.bono.alessandro.postagger.PoSTagger;
 import it.unito.edu.bono.alessandro.postagger.ViterbiPoSTagger;
+import it.unito.edu.bono.alessandro.smoother.MinValueSmoother;
 import it.unito.edu.bono.alessandro.util.Evaluator;
 import java.io.IOException;
 import java.util.logging.Level;
@@ -38,7 +39,7 @@ public class Main {
             PoSTagger posTagger = new ViterbiPoSTagger();
             posTagger.setTraningSet("data/ud12_for_POS_TAGGING-160229-train.txt");
             posTagger.setNormalizer(new CapitalizeNormalizer());
-            posTagger.setSmoothType("MINVALUE");
+            posTagger.setSmoother(new MinValueSmoother());
             posTagger.train();
             Evaluator evaluator = new Evaluator();
             evaluator.setPoSTagger(posTagger);

@@ -17,6 +17,7 @@
 package it.unito.edu.bono.alessandro.postagger;
 
 import it.unito.edu.bono.alessandro.normalizer.Normalizer;
+import it.unito.edu.bono.alessandro.smoother.Smoother;
 import it.unito.edu.bono.alessandro.util.Counter;
 import it.unito.edu.bono.alessandro.util.Pair;
 import java.io.IOException;
@@ -47,8 +48,8 @@ public abstract class PoSTaggerAbstract implements PoSTagger {
     }
 
     @Override
-    public void setSmoothType(String smoothType) {
-        counter.setSmoothType(smoothType);
+    public void setSmoother(Smoother smoother) {
+        counter.setSmoother(smoother);
     }
 
     @Override

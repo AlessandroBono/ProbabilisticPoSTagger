@@ -14,30 +14,23 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package it.unito.edu.bono.alessandro.postagger;
+package it.unito.edu.bono.alessandro.smoother;
 
-import it.unito.edu.bono.alessandro.normalizer.Normalizer;
-import it.unito.edu.bono.alessandro.smoother.Smoother;
-import it.unito.edu.bono.alessandro.util.Pair;
-import java.io.IOException;
-import java.util.ArrayList;
+import it.unito.edu.bono.alessandro.util.Counter;
 
 /**
  *
  * @author Alessandro Bono <alessandro.bono@edu.unito.it>
  */
-public interface PoSTagger {
+public abstract class SmootherAbstract implements Smoother {
 
-    public void setTraningSet(String traningSetPath);
+    protected Counter counter = null;
 
-    public void setSmoother(Smoother smoother);
+    @Override
+    public void setCounter(Counter counter) {
+        this.counter = counter;
+    }
 
-    public void setdDevSet(String devSetPath);
-
-    public void setNormalizer(Normalizer normalizer);
-
-    public void train() throws IOException;
-
-    public ArrayList<Pair<String, String>> tagPhrase(ArrayList<String> phrase) throws IOException;
-
+    @Override
+    public abstract double smooth(String word);
 }
