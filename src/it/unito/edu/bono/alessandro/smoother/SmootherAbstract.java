@@ -16,6 +16,7 @@
  */
 package it.unito.edu.bono.alessandro.smoother;
 
+import it.unito.edu.bono.alessandro.normalizer.Normalizer;
 import it.unito.edu.bono.alessandro.util.Counter;
 
 /**
@@ -25,6 +26,7 @@ import it.unito.edu.bono.alessandro.util.Counter;
 public abstract class SmootherAbstract implements Smoother {
 
     protected Counter counter = null;
+    protected Normalizer normalizer = null;
 
     @Override
     public void setCounter(Counter counter) {
@@ -32,5 +34,10 @@ public abstract class SmootherAbstract implements Smoother {
     }
 
     @Override
-    public abstract double smooth(String word);
+    public void setNormaizer(Normalizer normalizer) {
+        this.normalizer = normalizer;
+    }
+
+    @Override
+    public abstract double smooth(String tag, String word);
 }

@@ -36,7 +36,7 @@ public class Counter {
     private HashMap<String, Integer> tagsCounter = new HashMap<>();
     private SparseMatrix transitionMatrix = new SparseMatrix();
     private SparseMatrix emissionMatrix = new SparseMatrix();
-    private boolean logarithmProbability = false;
+    private boolean logarithmProbability = true;
 
     public void setFilePath(String filePath) {
         this.filePath = filePath;
@@ -92,7 +92,7 @@ public class Counter {
         int emissionCount = emissionMatrix.get(tag, word);
         if (emissionCount == 0) {
             if (smoother != null) {
-                double smoothed = smoother.smooth(word);
+                double smoothed = smoother.smooth(tag, word);
                 return logarithmProbability ? Math.log(smoothed) : smoothed;
             } else {
                 return logarithmProbability ? Math.log(Double.MIN_VALUE) : 0;

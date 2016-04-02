@@ -16,6 +16,7 @@
  */
 package it.unito.edu.bono.alessandro.smoother;
 
+import it.unito.edu.bono.alessandro.normalizer.Normalizer;
 import it.unito.edu.bono.alessandro.util.Counter;
 
 /**
@@ -24,8 +25,10 @@ import it.unito.edu.bono.alessandro.util.Counter;
  */
 public interface Smoother {
 
-    public double smooth(String word);
+    public double smooth(String tag, String word);
 
     public void setCounter(Counter counter);
+
+    public void setNormaizer(Normalizer normalizer);
 
 }

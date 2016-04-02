@@ -23,7 +23,7 @@ package it.unito.edu.bono.alessandro.smoother;
 public class MinValueSmoother extends SmootherAbstract {
 
     @Override
-    public double smooth(String word) {
+    public double smooth(String tag, String word) {
         return Double.MIN_VALUE;
     }
 }
