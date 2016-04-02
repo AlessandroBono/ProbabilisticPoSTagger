@@ -32,7 +32,6 @@ public class Evaluator {
     private int correct = 0;
     private long testTime = 0;
     private String testSetPath;
-    private String devSetPath;
     private PoSTagger posTagger;
 
     public void setPoSTagger(PoSTagger tagger) {
@@ -41,10 +40,6 @@ public class Evaluator {
 
     public void setTestSet(String testSetPath) {
         this.testSetPath = testSetPath;
-    }
-
-    public void setdDevSet(String devSetPath) {
-        this.devSetPath = devSetPath;
     }
 
     public void evaluate() throws IOException {
