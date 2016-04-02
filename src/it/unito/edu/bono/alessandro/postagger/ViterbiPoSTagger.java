@@ -29,33 +29,33 @@ import java.util.Collections;
 public class ViterbiPoSTagger extends PoSTaggerAbstract {
 
     @Override
-    public ArrayList<Pair<String, String>> tagPhrase(ArrayList<String> phrase) throws IOException {
+    public ArrayList<Pair<String, String>> tagSentence(ArrayList<String> sentence) throws IOException {
         ArrayList<String> tags = counter.getTags();
-        double[][] viterbi = new double[tags.size()][phrase.size()];
-        int[][] backpointer = new int[tags.size()][phrase.size()];
+        double[][] viterbi = new double[tags.size()][sentence.size()];
+        int[][] backpointer = new int[tags.size()][sentence.size()];
 
         for (int i = 0; i < tags.size(); i++) {
             double transitionProbability = counter.getTransitionProbability(CustomTag.START, tags.get(i));
-            double emissionProbability = counter.getEmissionProbability(tags.get(i), phrase.get(0));
+            double emissionProbability = counter.getEmissionProbability(tags.get(i), sentence.get(0));
             viterbi[i][0] = transitionProbability * emissionProbability;
             backpointer[i][0] = -1;
         }
 
-        for (int i = 1; i < phrase.size(); i++) {
+        for (int i = 1; i < sentence.size(); i++) {
             for (int j = 0; j < tags.size(); j++) {
                 int argMax = argMax(viterbi, j, i - 1);
                 double transitionProbability = counter.getTransitionProbability(tags.get(argMax), tags.get(j));
-                double emissionProbability = counter.getEmissionProbability(tags.get(j), phrase.get(i));
+                double emissionProbability = counter.getEmissionProbability(tags.get(j), sentence.get(i));
                 viterbi[j][i] = viterbi[argMax][i - 1] * transitionProbability * emissionProbability;
                 backpointer[j][i] = argMax;
             }
         }
 
-        int argMax = argMax(viterbi, tags.indexOf(CustomTag.END), phrase.size() - 1);
+        int argMax = argMax(viterbi, tags.indexOf(CustomTag.END), sentence.size() - 1);
         ArrayList<Pair<String, String>> output = new ArrayList<>();
         int idxTag = argMax;
-        for (int j = phrase.size() - 1; j >= 0; j--) {
-            String word = phrase.get(j);
+        for (int j = sentence.size() - 1; j >= 0; j--) {
+            String word = sentence.get(j);
             String tag = tags.get(idxTag);
             output.add(new Pair<>(word, tag));
             idxTag = backpointer[idxTag][j];

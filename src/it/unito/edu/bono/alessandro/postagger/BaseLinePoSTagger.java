@@ -29,9 +29,9 @@ public class BaseLinePoSTagger extends PoSTaggerAbstract {
     private static final String DEFAULT_TAG = "NOUN";
 
     @Override
-    public ArrayList<Pair<String, String>> tagPhrase(ArrayList<String> phrase) throws IOException {
+    public ArrayList<Pair<String, String>> tagSentence(ArrayList<String> sentence) throws IOException {
         ArrayList<Pair<String, String>> output = new ArrayList<>();
-        for (String word : phrase) {
+        for (String word : sentence) {
             String tag = counter.getMostFrequentTag(word, DEFAULT_TAG);
             output.add(new Pair(word, tag));
         }

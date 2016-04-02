@@ -38,6 +38,6 @@ public interface PoSTagger {
 
     public void train() throws IOException;
 
-    public ArrayList<Pair<String, String>> tagPhrase(ArrayList<String> phrase) throws IOException;
+    public ArrayList<Pair<String, String>> tagSentence(ArrayList<String> sentence) throws IOException;
 
 }

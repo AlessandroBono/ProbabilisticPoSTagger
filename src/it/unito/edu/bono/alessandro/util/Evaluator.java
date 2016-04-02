@@ -50,22 +50,22 @@ public class Evaluator {
     public void evaluate() throws IOException {
         String line;
         BufferedReader reader = new BufferedReader(new FileReader(testSetPath));
-        ArrayList<String> phrase = new ArrayList<>();
+        ArrayList<String> sentence = new ArrayList<>();
         ArrayList<Pair<String, String>> correctTags = new ArrayList<>();
         while ((line = reader.readLine()) != null) {
             if (line.length() > 0) {
                 String[] temp = line.split("\t");
                 String word = temp[0];
                 String tag = temp[1];
-                phrase.add(word);
+                sentence.add(word);
                 correctTags.add(new Pair(word, tag));
             } else {
                 long startTime = System.nanoTime();
-                ArrayList<Pair<String, String>> resultTags = posTagger.tagPhrase(phrase);
+                ArrayList<Pair<String, String>> resultTags = posTagger.tagSentence(sentence);
                 long endTime = System.nanoTime();
                 testTime += endTime - startTime;
                 checkResultPerformance(resultTags, correctTags);
-                phrase = new ArrayList<>();
+                sentence = new ArrayList<>();
                 correctTags = new ArrayList<>();
             }
         }

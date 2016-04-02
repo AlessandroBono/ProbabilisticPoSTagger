@@ -58,6 +58,6 @@ public abstract class PoSTaggerAbstract implements PoSTagger {
     }
 
     @Override
-    public abstract ArrayList<Pair<String, String>> tagPhrase(ArrayList<String> phrase) throws IOException;
+    public abstract ArrayList<Pair<String, String>> tagSentence(ArrayList<String> sentence) throws IOException;
 
 }
