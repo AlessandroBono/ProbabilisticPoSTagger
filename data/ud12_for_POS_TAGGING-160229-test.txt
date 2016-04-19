@@ -571,7 +571,6 @@ Bassi	PROPN
 
 Ma	CONJ
 se	SCONJ
-gliene	_
 glie	PRON
 ne	PRON
 avete	AUX
@@ -1109,7 +1108,6 @@ generazionale	ADJ
 :	PUNCT
 
 Ed	CONJ
-eccoci	_
 ecco	ADV
 ci	PRON
 ricascati	VERB
@@ -2493,7 +2491,6 @@ comunque	ADV
 che	SCONJ
 finalmente	ADV
 sembra	VERB
-essersi	_
 esser	AUX
 si	PRON
 decisa	VERB
@@ -9201,7 +9198,6 @@ locale	ADJ
 E	CONJ
 continueremo	VERB
 a	ADP
-doverlo	_
 dover	AUX
 lo	PRON
 trattare	VERB

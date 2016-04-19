@@ -2336,7 +2336,6 @@ capacità	NOUN
 e	CONJ
 pensano	VERB
 di	ADP
-poterlo	_
 poter	AUX
 lo	PRON
 sostituire	VERB
@@ -3707,7 +3706,6 @@ afferma	VERB
 ,	PUNCT
 e	CONJ
 dopo	SCONJ
-essersi	_
 esser	AUX
 si	PRON
 battuto	VERB
@@ -4122,7 +4120,6 @@ sicurezza	NOUN
 del	ADP_A
 Quirinale	PROPN
 sembra	VERB
-essersi	_
 esser	AUX
 si	PRON
 abbattuta	VERB
@@ -7535,7 +7532,6 @@ Fossey	PROPN
 che	PRON
 prima	ADV
 di	ADP
-esservi	_
 esser	AUX
 vi	PRON
 uccisa	VERB
@@ -9599,7 +9595,6 @@ la	DET
 nave	NOUN
 Italia	PROPN
 sembra	VERB
-essersi	_
 esser	AUX
 si	PRON
 avviata	VERB
@@ -9814,7 +9809,6 @@ vendetta	NOUN
 L'	DET
 occasione	NOUN
 propizia	ADJ
-gliel'	_
 glie	PRON
 l'	PRON
 ha	AUX
@@ -10873,7 +10867,6 @@ i	DET
 suoi	DET
 potenti	ADJ
 protettori	NOUN
-glielo	_
 glie	PRON
 lo	PRON
 consentono	VERB
@@ -16805,7 +16798,6 @@ terra	NOUN
 e	CONJ
 noi	PRON
 non	ADV
-gliela	_
 glie	PRON
 la	PRON
 diamo	VERB
@@ -29242,7 +29234,6 @@ si	PRON
 è	AUX
 accorto	VERB
 d'	ADP
-averla	_
 aver	AUX
 la	PRON
 conosciuta	VERB
@@ -30695,7 +30686,6 @@ animali	NOUN
 "	PUNCT
 ,	PUNCT
 sembra	VERB
-essersi	_
 esser	AUX
 si	PRON
 messo	VERB
@@ -32876,7 +32866,6 @@ Lì	ADV
 Caine	PROPN
 ,	PUNCT
 dopo	SCONJ
-essersi	_
 esser	AUX
 si	PRON
 definito	VERB
@@ -37268,7 +37257,6 @@ sgretolando	VERB
 ancora	ADV
 prima	ADV
 di	ADP
-averlo	_
 aver	AUX
 lo	PRON
 collaudato	VERB
@@ -40436,7 +40424,6 @@ via	ADV
 quando	SCONJ
 giura	VERB
 di	ADP
-averci	_
 aver	AUX
 ci	PRON
 creduto	VERB
@@ -42794,7 +42781,6 @@ Saltavo	VERB
 per	ADP
 prima	ADV
 ed	CONJ
-essendomi	_
 essendo	AUX
 mi	PRON
 trovata	VERB
@@ -47702,7 +47688,6 @@ detriti	NOUN
 
 Subito	ADV
 dopo	SCONJ
-averlo	_
 aver	AUX
 lo	PRON
 visto	VERB
@@ -48199,7 +48184,6 @@ palloncino	NOUN
 giura	VERB
 di	ADP
 non	ADV
-averlo	_
 aver	AUX
 lo	PRON
 proprio	ADV
@@ -48710,7 +48694,6 @@ Un	DET
 metronotte	NOUN
 dice	VERB
 di	ADP
-averli	_
 aver	AUX
 li	PRON
 visti	VERB
@@ -53924,7 +53907,6 @@ Zuwachtgeschwader	PROPN
 presta	VERB
 servizio	NOUN
 senza	ADP
-doversi	_
 dover	AUX
 si	PRON
 alzare	VERB
@@ -58783,7 +58765,6 @@ cemento	NOUN
 .	PUNCT
 
 Ed	CONJ
-eccoci	_
 ecco	ADV
 ci	PRON
 alla	ADP_A
@@ -60054,7 +60035,6 @@ e	CONJ
 l'	DET
 impressione	NOUN
 di	ADP
-esserti	_
 esser	AUX
 ti	PRON
 davvero	ADV
@@ -77913,7 +77893,6 @@ ha	AUX
 subito	VERB
 danno	NOUN
 deve	AUX
-esserne	_
 esser	AUX
 ne	PRON
 risarcito	VERB
@@ -82163,7 +82142,6 @@ terzi	PRON
 ma	CONJ
 ,	PUNCT
 dopo	SCONJ
-essersi	_
 esser	AUX
 si	PRON
 servito	VERB
@@ -83462,7 +83440,6 @@ quarti	NOUN
 o	CONJ
 quando	SCONJ
 ,	PUNCT
-potendosi	_
 potendo	AUX
 si	PRON
 la	DET
@@ -100546,7 +100523,6 @@ congruo	ADJ
 termine	NOUN
 di	ADP
 non	ADV
-volerne	_
 voler	AUX
 ne	PRON
 profittare	VERB
@@ -101016,7 +100992,6 @@ smarrita	VERB
 senza	ADP
 che	SCONJ
 possa	AUX
-esserne	_
 esser	AUX
 ne	PRON
 provato	VERB
@@ -120730,7 +120705,6 @@ degli	ADP_A
 Eroi	NOUN
 .	PUNCT
 
-Eccolo	_
 Ecco	ADV
 lo	PRON
 il	DET
@@ -121905,7 +121879,6 @@ attaccato	VERB
 duramente	ADV
 Berisha	PROPN
 dopo	SCONJ
-averlo	_
 aver	AUX
 lo	PRON
 sostenuto	VERB
@@ -128723,7 +128696,6 @@ capitale	NOUN
 .	PUNCT
 
 Ed	CONJ
-eccolo	_
 ecco	ADV
 lo	PRON
 l'	DET
@@ -130932,7 +130904,6 @@ Ma	CONJ
 i	DET
 primi	ADJ
 a	ADP
-doversene	_
 dover	AUX
 se	PRON
 ne	PRON
@@ -133423,7 +133394,6 @@ con	ADP
 l'	DET
 accusa	NOUN
 di	ADP
-esserne	_
 esser	AUX
 ne	PRON
 stato	VERB
@@ -138203,7 +138173,6 @@ lui	PRON
 richiesti	VERB
 ,	PUNCT
 per	ADP
-potersi	_
 poter	AUX
 si	PRON
 recare	VERB
@@ -143160,7 +143129,6 @@ strappare	VERB
 consensi	NOUN
 .	PUNCT
 
-Eccole	_
 Ecco	ADV
 le	PRON
 lì	ADV
@@ -144086,7 +144054,6 @@ cucina	NOUN
 ,	PUNCT
 e	CONJ
 che	SCONJ
-glielo	_
 glie	PRON
 lo	PRON
 avevano	AUX
@@ -144713,7 +144680,6 @@ tagliati	VERB
 i	DET
 capelli	NOUN
 e	CONJ
-glieli	_
 glie	PRON
 li	PRON
 avrebbe	AUX
@@ -145024,7 +144990,6 @@ strada	NOUN
 .	PUNCT
 
 Se	SCONJ
-gliel'	_
 glie	PRON
 l'	PRON
 avessero	AUX
@@ -149576,7 +149541,6 @@ con	ADP
 l'	DET
 intento	NOUN
 di	ADP
-poterli	_
 poter	AUX
 li	PRON
 utilizzare	VERB
@@ -149609,7 +149573,6 @@ novità	NOUN
 al	ADP_A
 punto	NOUN
 da	ADP
-poterlo	_
 poter	AUX
 lo	PRON
 definire	VERB
@@ -163615,7 +163578,6 @@ il	DET
 consumatore	NOUN
 e	CONJ
 devono	AUX
-essergli	_
 esser	AUX
 gli	PRON
 comunicate	VERB
@@ -178657,7 +178619,6 @@ anni	NOUN
 bisogna	VERB
 avere	VERB
 per	ADP
-potersi	_
 poter	AUX
 si	PRON
 sposare	VERB
@@ -193300,7 +193261,6 @@ aiuto	NOUN
 ma	CONJ
 poi	ADV
 di	ADP
-essersi	_
 esser	AUX
 si	PRON
 persa	VERB
@@ -212395,7 +212355,6 @@ Facebook	PROPN
 ?	PUNCT
 
 Per	ADP
-poterti	_
 poter	AUX
 ti	PRON
 registrare	VERB
@@ -214380,7 +214339,6 @@ studi	NOUN
 di	ADP
 legge	NOUN
 dopo	SCONJ
-essersi	_
 esser	AUX
 si	PRON
 stancato	VERB
@@ -229934,7 +229892,6 @@ soltanto	ADV
 se	PRON
 stessi	ADJ
 per	ADP
-essersi	_
 esser	AUX
 si	PRON
 lanciati	VERB
@@ -243453,7 +243410,6 @@ guidare	VERB
 l'	DET
 Europa	PROPN
 senza	ADP
-doverne	_
 dover	AUX
 ne	PRON
 pagare	VERB
