@@ -24,6 +24,6 @@ public class MinValueSmoother extends SmootherAbstract {
 
     @Override
     public double smooth(String tag, String word) {
-        return Double.MIN_VALUE;
+        return 1 / (double) Integer.MAX_VALUE;
     }
 }
