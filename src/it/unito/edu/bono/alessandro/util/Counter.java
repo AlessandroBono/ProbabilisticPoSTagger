@@ -101,7 +101,7 @@ public class Counter {
         if (logarithmProbability) {
             return Math.log(emissionCount) - Math.log(tagsCounter.get(tag));
         }
-        return emissionCount / tagsCounter.get(tag);
+        return emissionCount / (double) tagsCounter.get(tag);
     }
 
     public double getTransitionProbability(String tag1, String tag2) {
@@ -112,7 +112,7 @@ public class Counter {
         if (logarithmProbability) {
             return Math.log(transitionCounter) - Math.log(tagsCounter.get(tag1));
         }
-        return transitionCounter / tagsCounter.get(tag1);
+        return transitionCounter / (double) tagsCounter.get(tag1);
     }
 
     public ArrayList<String> getTags() {
