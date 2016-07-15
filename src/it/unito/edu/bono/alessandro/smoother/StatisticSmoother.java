@@ -30,6 +30,7 @@ import java.util.List;
 public class StatisticSmoother extends SmootherAbstract {
 
     private final HashMap<String, Integer> unknownCounter = new HashMap<>();
+    private int totalUnknown = 0;
 
     private void incrementUnkownCounter(HashMap<String, Integer> unknownCounter, String tag) {
         if (!unknownCounter.containsKey(tag)) {
@@ -67,6 +68,7 @@ public class StatisticSmoother extends SmootherAbstract {
                 word = normalizer.normalize(word);
                 if (!knownWords.contains(word)) {
                     incrementUnkownCounter(unknownCounter, tag);
+                    totalUnknown++;
                 }
             }
         }
@@ -74,7 +76,7 @@ public class StatisticSmoother extends SmootherAbstract {
 
     @Override
     public double smooth(String tag, String word) {
-        return unknownCounter.getOrDefault(tag, 1) / (double) unknownCounter.size();
+        return unknownCounter.getOrDefault(tag, 1) / (double) totalUnknown;
     }
 
 }
