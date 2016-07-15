@@ -63,7 +63,7 @@ public class BaseLinePoSTagger extends PoSTaggerAbstract {
     }
 
     @Override
-    public ArrayList<Pair<String, String>> tagSentence(ArrayList<String> sentence) throws IOException {
+    public ArrayList<Pair<String, String>> tagSentence(ArrayList<String> sentence) {
         ArrayList<Pair<String, String>> output = new ArrayList<>();
         for (String word : sentence) {
             String tag = getMostFrequentTag(word);

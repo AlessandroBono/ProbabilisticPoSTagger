@@ -117,7 +117,7 @@ public class ViterbiPoSTagger extends PoSTaggerAbstract {
     }
 
     @Override
-    public ArrayList<Pair<String, String>> tagSentence(ArrayList<String> sentence) throws IOException {
+    public ArrayList<Pair<String, String>> tagSentence(ArrayList<String> sentence) {
         ArrayList<String> tags = getTags();
         double[][] viterbi = new double[tags.size()][sentence.size()];
         int[][] backpointer = new int[tags.size()][sentence.size()];
