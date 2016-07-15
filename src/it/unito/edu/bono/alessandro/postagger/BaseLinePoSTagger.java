@@ -46,6 +46,7 @@ public class BaseLinePoSTagger extends PoSTaggerAbstract {
                 emissionMatrix.increment(tag, word);
             }
         }
+        reader.close();
     }
 
     public String getMostFrequentTag(String word) {

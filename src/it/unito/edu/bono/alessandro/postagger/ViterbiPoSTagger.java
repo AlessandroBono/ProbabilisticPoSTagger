@@ -68,6 +68,7 @@ public class ViterbiPoSTagger extends PoSTaggerAbstract {
             incrementTagsCounter(tagsCounter, tag);
             oldTag = tag;
         }
+        reader.close();
         smoother.train();
     }
 
