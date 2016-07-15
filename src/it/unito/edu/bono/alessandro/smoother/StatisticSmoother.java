@@ -55,6 +55,7 @@ public class StatisticSmoother extends SmootherAbstract {
                 knownWords.add(word);
             }
         }
+        reader.close();
 
         // find words that aren't present in the training set while present in
         // the dev set
@@ -71,6 +72,7 @@ public class StatisticSmoother extends SmootherAbstract {
                 }
             }
         }
+        reader.close();
     }
 
     @Override

@@ -44,6 +44,7 @@ public class OneOverNSmoother extends SmootherAbstract {
                 }
             }
         }
+        reader.close();
     }
 
     @Override
