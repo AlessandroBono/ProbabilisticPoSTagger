@@ -103,10 +103,6 @@ public class ViterbiPoSTagger extends PoSTaggerAbstract {
         return new ArrayList<>(tagsCounter.keySet());
     }
 
-    private ArrayList<String> getWords() {
-        return new ArrayList<>(emissionMatrix.getColumns());
-    }
-
     private void incrementTagsCounter(HashMap<String, Integer> tagsCounter, String tag) {
         if (!tagsCounter.containsKey(tag)) {
             tagsCounter.put(tag, 1);
