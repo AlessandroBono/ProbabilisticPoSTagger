@@ -51,7 +51,6 @@ public class StatisticSmoother extends SmootherAbstract {
             if (line.length() > 0) {
                 String[] temp = line.split("\t");
                 String word = temp[0];
-                String tag = temp[1];
                 word = normalizer.normalize(word);
                 knownWords.add(word);
             }
