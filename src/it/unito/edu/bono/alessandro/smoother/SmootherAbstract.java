@@ -17,7 +17,7 @@
 package it.unito.edu.bono.alessandro.smoother;
 
 import it.unito.edu.bono.alessandro.normalizer.Normalizer;
-import it.unito.edu.bono.alessandro.util.Counter;
+import java.io.IOException;
 
 /**
  *
@@ -25,18 +25,27 @@ import it.unito.edu.bono.alessandro.util.Counter;
  */
 public abstract class SmootherAbstract implements Smoother {
 
-    protected Counter counter = null;
-    protected Normalizer normalizer = null;
+    protected Normalizer normalizer = (String word) -> word;
+    protected String devSetPath;
+    protected String trainingSetPath;
 
     @Override
-    public void setCounter(Counter counter) {
-        this.counter = counter;
-    }
-
-    @Override
-    public void setNormaizer(Normalizer normalizer) {
+    public void setNormalizer(Normalizer normalizer) {
         this.normalizer = normalizer;
     }
+
+    @Override
+    public void setDevSet(String devSetPath) {
+        this.devSetPath = devSetPath;
+    }
+
+    @Override
+    public void setTrainingSet(String trainingSetPath) {
+        this.trainingSetPath = trainingSetPath;
+    }
+
+    @Override
+    public abstract void train() throws IOException;
 
     @Override
     public abstract double smooth(String tag, String word);

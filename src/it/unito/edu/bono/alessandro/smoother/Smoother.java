@@ -17,7 +17,7 @@
 package it.unito.edu.bono.alessandro.smoother;
 
 import it.unito.edu.bono.alessandro.normalizer.Normalizer;
-import it.unito.edu.bono.alessandro.util.Counter;
+import java.io.IOException;
 
 /**
  *
@@ -25,10 +25,14 @@ import it.unito.edu.bono.alessandro.util.Counter;
  */
 public interface Smoother {
 
+    public void setTrainingSet(String trainingSetPath);
+
+    public void setDevSet(String DevSetPath);
+
+    public void train() throws IOException;
+
     public double smooth(String tag, String word);
 
-    public void setCounter(Counter counter);
-
-    public void setNormaizer(Normalizer normalizer);
+    public void setNormalizer(Normalizer normalizer);
 
 }

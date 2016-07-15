@@ -18,9 +18,13 @@ package it.unito.edu.bono.alessandro.postagger;
 
 import it.unito.edu.bono.alessandro.util.CustomTag;
 import it.unito.edu.bono.alessandro.util.Pair;
+import it.unito.edu.bono.alessandro.util.SparseMatrix;
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 
 /**
  *
@@ -28,15 +32,99 @@ import java.util.Collections;
  */
 public class ViterbiPoSTagger extends PoSTaggerAbstract {
 
+    private final HashMap<String, Integer> tagsCounter = new HashMap<>();
+    private final SparseMatrix transitionMatrix = new SparseMatrix();
+    private final SparseMatrix emissionMatrix = new SparseMatrix();
+    private boolean logarithmProbability = true;
+
+    public ViterbiPoSTagger() {
+        this(true);
+    }
+
+    public ViterbiPoSTagger(boolean logarithmProbability) {
+        this.logarithmProbability = logarithmProbability;
+    }
+
+    @Override
+    public void train() throws IOException {
+        String line;
+        String oldTag = CustomTag.START;
+        String tag;
+        BufferedReader reader = new BufferedReader(new FileReader(trainingSetPath));
+        while ((line = reader.readLine()) != null) {
+            if (line.length() > 0) {
+                String[] temp = line.split("\t");
+                String word = temp[0];
+                tag = temp[1];
+                word = normalizer.normalize(word);
+                emissionMatrix.increment(tag, word);
+                transitionMatrix.increment(oldTag, tag);
+            } else { // è finita la frase
+                tag = CustomTag.END;
+                incrementTagsCounter(tagsCounter, tag);
+                transitionMatrix.increment(oldTag, tag);
+                tag = CustomTag.START;
+            }
+            incrementTagsCounter(tagsCounter, tag);
+            oldTag = tag;
+        }
+        smoother.train();
+    }
+
+    private double getEmissionProbability(String tag, String word) {
+        word = normalizer.normalize(word);
+        int emissionCount = emissionMatrix.get(tag, word);
+        if (emissionCount == 0) {
+            if (smoother != null) {
+                double smoothed = smoother.smooth(tag, word);
+                return logarithmProbability ? Math.log(smoothed) : smoothed;
+            } else {
+                return logarithmProbability ? Math.log(Double.MIN_VALUE) : 0;
+            }
+        }
+        if (logarithmProbability) {
+            return Math.log(emissionCount) - Math.log(tagsCounter.get(tag));
+        }
+        return emissionCount / (double) tagsCounter.get(tag);
+    }
+
+    private double getTransitionProbability(String tag1, String tag2) {
+        double transitionCounter = transitionMatrix.get(tag1, tag2);
+        if (transitionCounter == 0) {
+            return logarithmProbability ? Math.log(Double.MIN_VALUE) : 0;
+        }
+        if (logarithmProbability) {
+            return Math.log(transitionCounter) - Math.log(tagsCounter.get(tag1));
+        }
+        return transitionCounter / (double) tagsCounter.get(tag1);
+    }
+
+    private ArrayList<String> getTags() {
+        return new ArrayList<>(tagsCounter.keySet());
+    }
+
+    private ArrayList<String> getWords() {
+        return new ArrayList<>(emissionMatrix.getColumns());
+    }
+
+    private void incrementTagsCounter(HashMap<String, Integer> tagsCounter, String tag) {
+        if (!tagsCounter.containsKey(tag)) {
+            tagsCounter.put(tag, 1);
+        } else {
+            Integer oldValue = tagsCounter.get(tag);
+            tagsCounter.put(tag, oldValue + 1);
+        }
+    }
+
     @Override
     public ArrayList<Pair<String, String>> tagSentence(ArrayList<String> sentence) throws IOException {
-        ArrayList<String> tags = counter.getTags();
+        ArrayList<String> tags = getTags();
         double[][] viterbi = new double[tags.size()][sentence.size()];
         int[][] backpointer = new int[tags.size()][sentence.size()];
 
         for (int i = 0; i < tags.size(); i++) {
-            double transitionProbability = counter.getTransitionProbability(CustomTag.START, tags.get(i));
-            double emissionProbability = counter.getEmissionProbability(tags.get(i), sentence.get(0));
+            double transitionProbability = getTransitionProbability(CustomTag.START, tags.get(i));
+            double emissionProbability = getEmissionProbability(tags.get(i), sentence.get(0));
             viterbi[i][0] = transitionProbability * emissionProbability;
             backpointer[i][0] = -1;
         }
@@ -44,8 +132,8 @@ public class ViterbiPoSTagger extends PoSTaggerAbstract {
         for (int i = 1; i < sentence.size(); i++) {
             for (int j = 0; j < tags.size(); j++) {
                 int argMax = argMax(viterbi, j, i - 1);
-                double transitionProbability = counter.getTransitionProbability(tags.get(argMax), tags.get(j));
-                double emissionProbability = counter.getEmissionProbability(tags.get(j), sentence.get(i));
+                double transitionProbability = getTransitionProbability(tags.get(argMax), tags.get(j));
+                double emissionProbability = getEmissionProbability(tags.get(j), sentence.get(i));
                 viterbi[j][i] = viterbi[argMax][i - 1] * transitionProbability * emissionProbability;
                 backpointer[j][i] = argMax;
             }
@@ -68,10 +156,10 @@ public class ViterbiPoSTagger extends PoSTaggerAbstract {
     private int argMax(double[][] viterbi, int idxTag, int idxWord) {
         int argMax = -1;
         double maxValue = Double.NEGATIVE_INFINITY;
-        ArrayList<String> tags = counter.getTags();
+        ArrayList<String> tags = getTags();
 
         for (int k = 0; k < tags.size(); k++) {
-            double transitionProbability = counter.getTransitionProbability(tags.get(k), tags.get(idxTag));
+            double transitionProbability = getTransitionProbability(tags.get(k), tags.get(idxTag));
             double currentValue = viterbi[k][idxWord] * transitionProbability;
             if (currentValue > maxValue) {
                 argMax = k;

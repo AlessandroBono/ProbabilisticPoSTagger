@@ -28,13 +28,13 @@ import java.util.ArrayList;
  */
 public interface PoSTagger {
 
-    public void setTraningSet(String traningSetPath);
+    public void setTrainingSet(String traningSetPath);
 
-    public void setSmoother(Smoother smoother);
-
-    public void setdDevSet(String devSetPath);
+    public void setDevSet(String devSetPath);
 
     public void setNormalizer(Normalizer normalizer);
+
+    public void setSmoother(Smoother smoother);
 
     public void train() throws IOException;
 

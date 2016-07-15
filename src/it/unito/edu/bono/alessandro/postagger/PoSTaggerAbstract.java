@@ -18,7 +18,6 @@ package it.unito.edu.bono.alessandro.postagger;
 
 import it.unito.edu.bono.alessandro.normalizer.Normalizer;
 import it.unito.edu.bono.alessandro.smoother.Smoother;
-import it.unito.edu.bono.alessandro.util.Counter;
 import it.unito.edu.bono.alessandro.util.Pair;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -29,33 +28,51 @@ import java.util.ArrayList;
  */
 public abstract class PoSTaggerAbstract implements PoSTagger {
 
+    protected String trainingSetPath;
     protected String devSetPath;
-    protected Counter counter = new Counter();
+    protected Normalizer normalizer = (String word) -> word;
+    protected Smoother smoother = null;
 
     @Override
-    public void setTraningSet(String trainingSetPath) {
-        counter.setFilePath(trainingSetPath);
+    public void setDevSet(String devSetPath) {
+        this.devSetPath = devSetPath;
+        if (smoother != null) {
+            smoother.setDevSet(devSetPath);
+        }
     }
 
     @Override
-    public void setdDevSet(String devSetPath) {
-        this.devSetPath = devSetPath;
+    public void setTrainingSet(String trainingSetPath) {
+        this.trainingSetPath = trainingSetPath;
+        if (smoother != null) {
+            smoother.setTrainingSet(trainingSetPath);
+        }
     }
 
     @Override
     public void setNormalizer(Normalizer normalizer) {
-        counter.setNormalizer(normalizer);
+        this.normalizer = normalizer;
+        if (smoother != null) {
+            smoother.setNormalizer(normalizer);
+        }
     }
 
     @Override
     public void setSmoother(Smoother smoother) {
-        counter.setSmoother(smoother);
+        this.smoother = smoother;
+        if (devSetPath != null) {
+            smoother.setDevSet(devSetPath);
+        }
+        if (trainingSetPath != null) {
+            smoother.setDevSet(trainingSetPath);
+        }
+        if (normalizer != null) {
+            smoother.setNormalizer(normalizer);
+        }
     }
 
     @Override
-    public void train() throws IOException {
-        counter.count();
-    }
+    public abstract void train() throws IOException;
 
     @Override
     public abstract ArrayList<Pair<String, String>> tagSentence(ArrayList<String> sentence) throws IOException;

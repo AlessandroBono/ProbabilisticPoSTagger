@@ -17,6 +17,9 @@
 package it.unito.edu.bono.alessandro.postagger;
 
 import it.unito.edu.bono.alessandro.util.Pair;
+import it.unito.edu.bono.alessandro.util.SparseMatrix;
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -27,12 +30,43 @@ import java.util.ArrayList;
 public class BaseLinePoSTagger extends PoSTaggerAbstract {
 
     private static final String DEFAULT_TAG = "NOUN";
+    private final SparseMatrix emissionMatrix = new SparseMatrix();
+
+    @Override
+    public void train() throws IOException {
+        String line;
+        String tag;
+        BufferedReader reader = new BufferedReader(new FileReader(trainingSetPath));
+        while ((line = reader.readLine()) != null) {
+            if (line.length() > 0) {
+                String[] temp = line.split("\t");
+                String word = temp[0];
+                tag = temp[1];
+                word = normalizer.normalize(word);
+                emissionMatrix.increment(tag, word);
+            }
+        }
+    }
+
+    public String getMostFrequentTag(String word) {
+        word = normalizer.normalize(word);
+        String mostFreqTag = "";
+        int maxValue = 0;
+        for (String tag : emissionMatrix.getRows()) {
+            Integer value = emissionMatrix.get(tag, word);
+            if (value > maxValue) {
+                maxValue = value;
+                mostFreqTag = tag;
+            }
+        }
+        return maxValue != 0 ? mostFreqTag : DEFAULT_TAG;
+    }
 
     @Override
     public ArrayList<Pair<String, String>> tagSentence(ArrayList<String> sentence) throws IOException {
         ArrayList<Pair<String, String>> output = new ArrayList<>();
         for (String word : sentence) {
-            String tag = counter.getMostFrequentTag(word, DEFAULT_TAG);
+            String tag = getMostFrequentTag(word);
             output.add(new Pair(word, tag));
         }
         return output;

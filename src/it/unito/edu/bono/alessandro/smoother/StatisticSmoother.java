@@ -16,14 +16,12 @@
  */
 package it.unito.edu.bono.alessandro.smoother;
 
-import it.unito.edu.bono.alessandro.util.Counter;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.List;
 
 /**
  *
@@ -31,44 +29,7 @@ import java.util.logging.Logger;
  */
 public class StatisticSmoother extends SmootherAbstract {
 
-    private String devSetPath = "";
-    private HashMap<String, Integer> unknownCounter = new HashMap<>();
-
-    public StatisticSmoother(String devSetPath) {
-        this.devSetPath = devSetPath;
-    }
-
-    @Override
-    public void setCounter(Counter counter) {
-        try {
-            super.setCounter(counter);
-            count();
-        } catch (IOException ex) {
-            Logger.getLogger(StatisticSmoother.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
-    private void count() throws IOException {
-        ArrayList<String> knownWords = counter.getWords();
-        if (knownWords.isEmpty()) {
-            throw new IllegalStateException("Allenare il PoSTagger prima di assegnarli uno Smoother");
-        }
-        String line;
-        BufferedReader reader = new BufferedReader(new FileReader(devSetPath));
-        while ((line = reader.readLine()) != null) {
-            if (line.length() > 0) {
-                String[] temp = line.split("\t");
-                String word = temp[0];
-                String tag = temp[1];
-                if (normalizer != null) {
-                    word = normalizer.normalize(word);
-                }
-                if (!knownWords.contains(word)) {
-                    incrementUnkownCounter(unknownCounter, tag);
-                }
-            }
-        }
-    }
+    private final HashMap<String, Integer> unknownCounter = new HashMap<>();
 
     private void incrementUnkownCounter(HashMap<String, Integer> unknownCounter, String tag) {
         if (!unknownCounter.containsKey(tag)) {
@@ -80,7 +41,40 @@ public class StatisticSmoother extends SmootherAbstract {
     }
 
     @Override
+    public void train() throws IOException {
+        // learn known words in the training set
+        List<String> knownWords = new ArrayList<>();
+        String line;
+        BufferedReader reader = new BufferedReader(new FileReader(trainingSetPath));
+        while ((line = reader.readLine()) != null) {
+            if (line.length() > 0) {
+                String[] temp = line.split("\t");
+                String word = temp[0];
+                String tag = temp[1];
+                word = normalizer.normalize(word);
+                knownWords.add(word);
+            }
+        }
+
+        // find words that aren't present in the training set while present in
+        // the dev set
+        reader = new BufferedReader(new FileReader(devSetPath));
+        while ((line = reader.readLine()) != null) {
+            if (line.length() > 0) {
+                String[] temp = line.split("\t");
+                String word = temp[0];
+                String tag = temp[1];
+                word = normalizer.normalize(word);
+                if (!knownWords.contains(word)) {
+                    incrementUnkownCounter(unknownCounter, tag);
+                }
+            }
+        }
+    }
+
+    @Override
     public double smooth(String tag, String word) {
         return unknownCounter.getOrDefault(tag, 1) / (double) unknownCounter.size();
     }
+
 }
