@@ -35,6 +35,7 @@ public class ViterbiPoSTagger extends PoSTaggerAbstract {
     private final HashMap<String, Integer> tagsCounter = new HashMap<>();
     private final SparseMatrix transitionMatrix = new SparseMatrix();
     private final SparseMatrix emissionMatrix = new SparseMatrix();
+    private ArrayList<String> knownWords;
     private boolean logarithmProbability = true;
 
     public ViterbiPoSTagger() {
@@ -69,6 +70,11 @@ public class ViterbiPoSTagger extends PoSTaggerAbstract {
             oldTag = tag;
         }
         reader.close();
+
+        // list of known word for smoothing, we sort them so that search for
+        // unknown words will be easier
+        knownWords = getWords();
+        Collections.sort(knownWords);
         if (smoother != null) {
             smoother.train();
         }
@@ -76,14 +82,20 @@ public class ViterbiPoSTagger extends PoSTaggerAbstract {
 
     private double getEmissionProbability(String tag, String word) {
         word = normalizer.normalize(word);
-        int emissionCount = emissionMatrix.get(tag, word);
-        if (emissionCount == 0) {
+        // if (!knownWords.contains(word)) is too much inefficient (~10 sec)
+        // we use a binary search, given that we sorted the known word
+        // during train()
+        if (Collections.binarySearch(knownWords, word) < 0) {
             if (smoother != null) {
                 double smoothed = smoother.smooth(tag, word);
                 return logarithmProbability ? Math.log(smoothed) : smoothed;
             } else {
                 return logarithmProbability ? Math.log(Double.MIN_VALUE) : 0;
             }
+        }
+        int emissionCount = emissionMatrix.get(tag, word);
+        if (emissionCount == 0) {
+            return logarithmProbability ? Math.log(Double.MIN_VALUE) : 0;
         }
         if (logarithmProbability) {
             return Math.log(emissionCount) - Math.log(tagsCounter.get(tag));
