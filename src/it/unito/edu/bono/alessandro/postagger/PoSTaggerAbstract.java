@@ -64,7 +64,7 @@ public abstract class PoSTaggerAbstract implements PoSTagger {
             smoother.setDevSet(devSetPath);
         }
         if (trainingSetPath != null) {
-            smoother.setDevSet(trainingSetPath);
+            smoother.setTrainingSet(trainingSetPath);
         }
         if (normalizer != null) {
             smoother.setNormalizer(normalizer);
