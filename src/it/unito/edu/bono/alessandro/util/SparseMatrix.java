@@ -26,7 +26,7 @@ import java.util.Set;
  */
 public class SparseMatrix {
 
-    private HashMap<String, HashMap<String, Integer>> matrix;
+    private final HashMap<String, HashMap<String, Integer>> matrix;
 
     public SparseMatrix() {
         matrix = new HashMap<>();
