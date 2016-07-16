@@ -85,19 +85,15 @@ public class ViterbiPoSTagger extends PoSTaggerAbstract {
         // if (!knownWords.contains(word)) is too much inefficient (~10 sec)
         // we use a binary search, given that we sorted the known word
         // during train()
-        if (Collections.binarySearch(knownWords, word) < 0) {
-            if (smoother != null) {
-                double smoothed = smoother.smooth(tag, word);
-                return logarithmProbability ? Math.log(smoothed) : smoothed;
-            } else {
-                return logarithmProbability ? Math.log(Double.MIN_VALUE) : 0;
-            }
+        if (smoother != null && Collections.binarySearch(knownWords, word) < 0) {
+            double smoothed = smoother.smooth(tag, word);
+            return logarithmProbability ? Math.log(smoothed) : smoothed;
         }
         int emissionCount = emissionMatrix.get(tag, word);
-        if (emissionCount == 0) {
-            return logarithmProbability ? Math.log(Double.MIN_VALUE) : 0;
-        }
         if (logarithmProbability) {
+            if (emissionCount == 0) {
+                return Math.log(Double.MIN_VALUE);
+            }
             return Math.log(emissionCount) - Math.log(tagsCounter.get(tag));
         }
         return emissionCount / (double) tagsCounter.get(tag);
