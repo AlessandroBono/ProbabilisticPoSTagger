@@ -69,7 +69,9 @@ public class ViterbiPoSTagger extends PoSTaggerAbstract {
             oldTag = tag;
         }
         reader.close();
-        smoother.train();
+        if (smoother != null) {
+            smoother.train();
+        }
     }
 
     private double getEmissionProbability(String tag, String word) {
