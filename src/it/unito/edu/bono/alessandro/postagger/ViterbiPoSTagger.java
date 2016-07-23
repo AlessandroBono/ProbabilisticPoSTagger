@@ -87,6 +87,9 @@ public class ViterbiPoSTagger extends PoSTaggerAbstract {
         // during train()
         if (smoother != null && Collections.binarySearch(knownWords, word) < 0) {
             double smoothed = smoother.smooth(tag, word);
+            if (logarithmProbability && smoothed == 0) {
+                return Math.log(Double.MIN_VALUE);
+            }
             return logarithmProbability ? Math.log(smoothed) : smoothed;
         }
         int emissionCount = emissionMatrix.get(tag, word);
@@ -136,7 +139,11 @@ public class ViterbiPoSTagger extends PoSTaggerAbstract {
         for (int i = 0; i < tags.size(); i++) {
             double transitionProbability = getTransitionProbability(CustomTag.START, tags.get(i));
             double emissionProbability = getEmissionProbability(tags.get(i), sentence.get(0));
-            viterbi[i][0] = transitionProbability * emissionProbability;
+            if (logarithmProbability) {
+                viterbi[i][0] = transitionProbability + emissionProbability;
+            } else {
+                viterbi[i][0] = transitionProbability * emissionProbability;
+            }
             backpointer[i][0] = -1;
         }
 
@@ -145,7 +152,11 @@ public class ViterbiPoSTagger extends PoSTaggerAbstract {
                 int argMax = argMax(viterbi, j, i - 1);
                 double transitionProbability = getTransitionProbability(tags.get(argMax), tags.get(j));
                 double emissionProbability = getEmissionProbability(tags.get(j), sentence.get(i));
-                viterbi[j][i] = viterbi[argMax][i - 1] * transitionProbability * emissionProbability;
+                if (logarithmProbability) {
+                    viterbi[j][i] = viterbi[argMax][i - 1] + transitionProbability + emissionProbability;
+                } else {
+                    viterbi[j][i] = viterbi[argMax][i - 1] * transitionProbability * emissionProbability;
+                }
                 backpointer[j][i] = argMax;
             }
         }
@@ -171,7 +182,12 @@ public class ViterbiPoSTagger extends PoSTaggerAbstract {
 
         for (int k = 0; k < tags.size(); k++) {
             double transitionProbability = getTransitionProbability(tags.get(k), tags.get(idxTag));
-            double currentValue = viterbi[k][idxWord] * transitionProbability;
+            double currentValue;
+            if (logarithmProbability) {
+                currentValue = viterbi[k][idxWord] + transitionProbability;
+            } else {
+                currentValue = viterbi[k][idxWord] * transitionProbability;
+            }
             if (currentValue > maxValue) {
                 argMax = k;
                 maxValue = currentValue;
