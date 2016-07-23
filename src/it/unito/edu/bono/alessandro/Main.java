@@ -22,6 +22,7 @@ import it.unito.edu.bono.alessandro.postagger.ViterbiPoSTagger;
 import it.unito.edu.bono.alessandro.smoother.MinValueSmoother;
 import it.unito.edu.bono.alessandro.util.Evaluator;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -35,6 +36,11 @@ public class Main {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
+        ArrayList sentence = new ArrayList<>();
+        sentence.add("io");
+        sentence.add("mangio");
+        sentence.add("la");
+        sentence.add("mela");
         try {
             PoSTagger posTagger = new ViterbiPoSTagger();
             posTagger.setSmoother(new MinValueSmoother());
@@ -46,6 +52,7 @@ public class Main {
             evaluator.setPoSTagger(posTagger);
             evaluator.setTestSet("data/ud12_for_POS_TAGGING-160229-test.txt");
             evaluator.evaluate();
+            System.out.println(posTagger.tagSentence(sentence));
         } catch (IOException ex) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
         }
