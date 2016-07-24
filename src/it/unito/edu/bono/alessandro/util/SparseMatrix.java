@@ -32,7 +32,7 @@ public class SparseMatrix {
         matrix = new HashMap<>();
     }
 
-    public Integer get(String row, String col) {
+    public int get(String row, String col) {
         if (!matrix.containsKey(row)) {
             return 0;
         }
