@@ -17,8 +17,6 @@
 package it.unito.edu.bono.alessandro.util;
 
 import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Set;
 
 /**
  *
@@ -58,18 +56,5 @@ public class SparseCube {
     public void increment(String coord0, String coord1, String coord2) {
         int oldValue = get(coord0, coord1, coord2);
         set(coord0, coord1, coord2, oldValue + 1);
-    }
-
-    private Set<String> getRows() {
-        return cube.keySet();
-    }
-
-    private Set<String> getColumns() {
-        Set<String> cols = new HashSet<>();
-        Set<String> rows = cube.keySet();
-        for (String row : rows) {
-            cols.addAll(cube.get(row).keySet());
-        }
-        return cols;
     }
 }
