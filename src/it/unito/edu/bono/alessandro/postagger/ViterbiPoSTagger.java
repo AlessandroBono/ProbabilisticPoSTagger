@@ -16,6 +16,7 @@
  */
 package it.unito.edu.bono.alessandro.postagger;
 
+import it.unito.edu.bono.alessandro.util.CustomArray;
 import it.unito.edu.bono.alessandro.util.CustomTag;
 import it.unito.edu.bono.alessandro.util.Pair;
 import it.unito.edu.bono.alessandro.util.SparseMatrix;
@@ -24,7 +25,6 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 
 /**
  *
@@ -32,7 +32,7 @@ import java.util.HashMap;
  */
 public class ViterbiPoSTagger extends PoSTaggerAbstract {
 
-    private final HashMap<String, Integer> tagsCounter = new HashMap<>();
+    private final CustomArray tagsCounter = new CustomArray();
     private final SparseMatrix transitionMatrix = new SparseMatrix();
     private final SparseMatrix emissionMatrix = new SparseMatrix();
     private ArrayList<String> knownWords;
@@ -62,11 +62,11 @@ public class ViterbiPoSTagger extends PoSTaggerAbstract {
                 transitionMatrix.increment(oldTag, tag);
             } else { // è finita la frase
                 tag = CustomTag.END;
-                incrementTagsCounter(tagsCounter, tag);
+                tagsCounter.increment(tag);
                 transitionMatrix.increment(oldTag, tag);
                 tag = CustomTag.START;
             }
-            incrementTagsCounter(tagsCounter, tag);
+            tagsCounter.increment(tag);
             oldTag = tag;
         }
         reader.close();
@@ -114,20 +114,11 @@ public class ViterbiPoSTagger extends PoSTaggerAbstract {
     }
 
     private ArrayList<String> getTags() {
-        return new ArrayList<>(tagsCounter.keySet());
+        return new ArrayList<>(tagsCounter.getIdexes());
     }
 
     private ArrayList<String> getWords() {
         return new ArrayList<>(emissionMatrix.getColumns());
-    }
-
-    private void incrementTagsCounter(HashMap<String, Integer> tagsCounter, String tag) {
-        if (!tagsCounter.containsKey(tag)) {
-            tagsCounter.put(tag, 1);
-        } else {
-            Integer oldValue = tagsCounter.get(tag);
-            tagsCounter.put(tag, oldValue + 1);
-        }
     }
 
     @Override

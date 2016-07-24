@@ -16,12 +16,12 @@
  */
 package it.unito.edu.bono.alessandro.smoother;
 
+import it.unito.edu.bono.alessandro.util.CustomArray;
 import it.unito.edu.bono.alessandro.util.SparseMatrix;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -36,20 +36,16 @@ public class MorphItSmoother extends SmootherAbstract {
     @Override
     public double smooth(String tag, String word) {
         int nTags = knownTags.size();
-        HashMap<String, Integer> tagsCount = new HashMap<>();
+        CustomArray tagsCount = new CustomArray();
         int totalCount = 0;
 
         if (morphIt.getRows().contains(word)) {
             for (String pos : knownTags) {
                 int count = morphIt.get(word, pos);
                 totalCount += count;
-                incrementTagsCounter(tagsCount, pos, count);
+                tagsCount.increment(pos, count);
             }
-            if (tagsCount.containsKey(tag)) {
-                return tagsCount.get(tag) / (double) totalCount;
-            } else {
-                return 0;
-            }
+            return tagsCount.get(tag) / (double) totalCount;
         } else {
             // verifico se è un numero
             if (tag.equals("NUM")) {
@@ -98,15 +94,6 @@ public class MorphItSmoother extends SmootherAbstract {
             }
         }
         reader.close();
-    }
-
-    private void incrementTagsCounter(HashMap<String, Integer> tagsCounter, String tag, int val) {
-        if (!tagsCounter.containsKey(tag)) {
-            tagsCounter.put(tag, val);
-        } else {
-            Integer oldValue = tagsCounter.get(tag);
-            tagsCounter.put(tag, oldValue + val);
-        }
     }
 
     private String simplifyTag(String tag) {
