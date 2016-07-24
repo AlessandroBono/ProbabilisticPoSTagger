@@ -39,9 +39,9 @@ public class TrigramsPoSTagger extends PoSTaggerAbstract {
     private final SparseMatrix emissionMatrix = new SparseMatrix();
     private ArrayList<String> knownWords;
     private int totalToken = 0;
-    private double lambda0 = 0;
     private double lambda1 = 0;
     private double lambda2 = 0;
+    private double lambda3 = 0;
 
     @Override
     public void train() throws IOException {
@@ -112,13 +112,11 @@ public class TrigramsPoSTagger extends PoSTaggerAbstract {
 
         reader.close();
 
-        double totalLambda = lambda0 + lambda1 + lambda2;
+        double totalLambda = lambda1 + lambda2 + lambda3;
 
-        lambda0 /= totalLambda;
         lambda1 /= totalLambda;
         lambda2 /= totalLambda;
-        System.out.println(lambda0 + " " + lambda1 + " " + lambda2);
-
+        lambda3 /= totalLambda;
     }
 
     private void deletedInterpolationImpl(String oldOldTag, String oldTag, String tag) {
@@ -143,11 +141,11 @@ public class TrigramsPoSTagger extends PoSTaggerAbstract {
         unigramProb = (unigramTransition.get(tag) - 1) / (double) (totalToken - 1);
 
         if (trigramProb >= bigramProb && trigramProb >= unigramProb) {
-            lambda2 += trigramTransition.get(oldOldTag, oldTag, tag);
+            lambda3 += trigramTransition.get(oldOldTag, oldTag, tag);
         } else if (bigramProb >= trigramProb && bigramProb >= unigramProb) {
+            lambda2 += trigramTransition.get(oldOldTag, oldTag, tag);
+        } else { // unigramProb is the greatest
             lambda1 += trigramTransition.get(oldOldTag, oldTag, tag);
-        } else {
-            lambda0 += trigramTransition.get(oldOldTag, oldTag, tag);
         }
     }
 
@@ -191,7 +189,7 @@ public class TrigramsPoSTagger extends PoSTaggerAbstract {
 
         unigramProb = unigramTransition.get(tag) / (double) totalToken;
 
-        return lambda2 * trigramProb + lambda1 * bigramProb + lambda0 * unigramProb;
+        return lambda3 * trigramProb + lambda2 * bigramProb + lambda1 * unigramProb;
     }
 
     @Override
@@ -210,14 +208,14 @@ public class TrigramsPoSTagger extends PoSTaggerAbstract {
             backpointer[startIdx][i][0] = -1;
         }
 
-        for (int k = 1; k < sentenceSize; k++) {
-            for (int u = 0; u < tagsSize; u++) {
-                for (int v = 0; v < tagsSize; v++) {
-                    int argMax = argMax(viterbi, u, v, k - 1);
-                    double transitionProbability = getTransitionProbability(tags.get(argMax), tags.get(u), tags.get(v));
-                    double emissionProbability = getEmissionProbability(tags.get(v), sentence.get(k));
-                    viterbi[u][v][k] = viterbi[argMax][u][k - 1] * transitionProbability * emissionProbability;
-                    backpointer[u][v][k] = argMax;
+        for (int i = 1; i < sentenceSize; i++) {
+            for (int j = 0; j < tagsSize; j++) {
+                for (int k = 0; k < tagsSize; k++) {
+                    int argMax = argMax(viterbi, j, k, i - 1);
+                    double transitionProbability = getTransitionProbability(tags.get(argMax), tags.get(j), tags.get(k));
+                    double emissionProbability = getEmissionProbability(tags.get(k), sentence.get(i));
+                    viterbi[j][k][i] = viterbi[argMax][j][i - 1] * transitionProbability * emissionProbability;
+                    backpointer[j][k][i] = argMax;
                 }
             }
         }
