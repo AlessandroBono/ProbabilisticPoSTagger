@@ -31,6 +31,7 @@ public class Evaluator {
     private int total = 0;
     private int correct = 0;
     private long testTime = 0;
+    private final SparseMatrix coupleErrors = new SparseMatrix();
     private String testSetPath;
     private PoSTagger posTagger;
 
@@ -77,17 +78,36 @@ public class Evaluator {
             if (!resultPair.getFirst().equals(correctPair.getFirst())) {
                 throw new IllegalArgumentException("Test set non correttamente allineati");
             }
-            if (resultPair.getSecond().equals(correctPair.getSecond())) {
+            String resultTag = resultPair.getSecond();
+            String correctTag = correctPair.getSecond();
+            if (resultTag.equals(correctTag)) {
                 correct++;
+            } else {
+                coupleErrors.increment(resultTag, correctTag);
             }
             total++;
         }
     }
 
     private void printResults() {
+        int maxValue = Integer.MIN_VALUE;
+        String maxTag0 = null;
+        String maxTag1 = null;
+        for (String tag0 : coupleErrors.getRows()) {
+            for (String tag1 : coupleErrors.getColumns()) {
+                int nErrors = coupleErrors.get(tag0, tag1);
+                if (nErrors > maxValue) {
+                    maxValue = nErrors;
+                    maxTag0 = tag0;
+                    maxTag1 = tag1;
+                }
+            }
+        }
+
         System.out.println("### " + posTagger.getClass().getName() + " ###");
         System.out.println("Corretti: " + correct + "/" + total);
         System.out.println("Percentuale: " + correct / (float) total);
         System.out.println("Tempo Impiegato: " + testTime / 1000000000.0 + " secondi");
+        System.out.println("Errore più comune: " + maxTag0 + "-" + maxTag1 + " " + maxValue / (float) (total - correct));
     }
 }
