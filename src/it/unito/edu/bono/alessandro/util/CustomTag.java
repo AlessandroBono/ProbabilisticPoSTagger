@@ -26,6 +26,7 @@ public class CustomTag {
 
     }
 
+    public static final String PRESTART = "PRESTART";
     public static final String START = "START";
     public static final String END = "END";
 }
