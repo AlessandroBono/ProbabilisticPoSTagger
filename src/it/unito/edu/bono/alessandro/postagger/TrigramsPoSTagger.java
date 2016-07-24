@@ -256,6 +256,7 @@ public class TrigramsPoSTagger extends PoSTaggerAbstract {
         return output;
     }
 
+    // argmax_{k} viterbi[k][idxTag0][idxWord]* P(idxTag1 | k, idxTag0)
     private int argMax(double[][][] viterbi, int idxTag0, int idxTag1, int idxWord) {
         int argMax = -1;
         double maxValue = Double.NEGATIVE_INFINITY;
