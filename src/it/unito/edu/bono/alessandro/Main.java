@@ -16,10 +16,10 @@
  */
 package it.unito.edu.bono.alessandro;
 
-import it.unito.edu.bono.alessandro.normalizer.CapitalizeNormalizer;
+import it.unito.edu.bono.alessandro.normalizer.LemmaNormalizer;
 import it.unito.edu.bono.alessandro.postagger.PoSTagger;
-import it.unito.edu.bono.alessandro.postagger.ViterbiPoSTagger;
-import it.unito.edu.bono.alessandro.smoother.MinValueSmoother;
+import it.unito.edu.bono.alessandro.postagger.TrigramsPoSTagger;
+import it.unito.edu.bono.alessandro.smoother.MorphItSmoother;
 import it.unito.edu.bono.alessandro.util.Evaluator;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -42,11 +42,11 @@ public class Main {
         sentence.add("la");
         sentence.add("mela");
         try {
-            PoSTagger posTagger = new ViterbiPoSTagger();
-            posTagger.setSmoother(new MinValueSmoother());
+            PoSTagger posTagger = new TrigramsPoSTagger();
+            posTagger.setNormalizer(new LemmaNormalizer());
+            posTagger.setSmoother(new MorphItSmoother());
             posTagger.setTrainingSet("data/ud12_for_POS_TAGGING-160229-train.txt");
             posTagger.setDevSet("data/ud12_for_POS_TAGGING-160229-dev.txt");
-            posTagger.setNormalizer(new CapitalizeNormalizer());
             long startTime = System.nanoTime();
             posTagger.train();
             long endTime = System.nanoTime();
