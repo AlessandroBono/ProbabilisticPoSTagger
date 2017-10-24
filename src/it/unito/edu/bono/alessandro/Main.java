@@ -47,12 +47,15 @@ public class Main {
             posTagger.setTrainingSet("data/ud12_for_POS_TAGGING-160229-train.txt");
             posTagger.setDevSet("data/ud12_for_POS_TAGGING-160229-dev.txt");
             posTagger.setNormalizer(new CapitalizeNormalizer());
+            long startTime = System.nanoTime();
             posTagger.train();
+            long endTime = System.nanoTime();
             Evaluator evaluator = new Evaluator();
             evaluator.setPoSTagger(posTagger);
             evaluator.setTestSet("data/ud12_for_POS_TAGGING-160229-test.txt");
             evaluator.evaluate();
             System.out.println(posTagger.tagSentence(sentence));
+            System.out.println("Training time: " + (endTime - startTime) / 1000000000.0);
         } catch (IOException ex) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
         }
