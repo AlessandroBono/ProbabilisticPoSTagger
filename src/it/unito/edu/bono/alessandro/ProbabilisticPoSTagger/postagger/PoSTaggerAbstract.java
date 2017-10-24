@@ -14,11 +14,11 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package it.unito.edu.bono.alessandro.postagger;
+package it.unito.edu.bono.alessandro.ProbabilisticPoSTagger.postagger;
 
-import it.unito.edu.bono.alessandro.normalizer.Normalizer;
-import it.unito.edu.bono.alessandro.smoother.Smoother;
-import it.unito.edu.bono.alessandro.util.Pair;
+import it.unito.edu.bono.alessandro.ProbabilisticPoSTagger.normalizer.Normalizer;
+import it.unito.edu.bono.alessandro.ProbabilisticPoSTagger.smoother.Smoother;
+import it.unito.edu.bono.alessandro.ProbabilisticPoSTagger.util.Pair;
 import java.io.IOException;
 import java.util.ArrayList;
 

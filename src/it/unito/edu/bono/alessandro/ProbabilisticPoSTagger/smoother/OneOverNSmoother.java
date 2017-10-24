@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package it.unito.edu.bono.alessandro.smoother;
+package it.unito.edu.bono.alessandro.ProbabilisticPoSTagger.smoother;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -26,7 +26,7 @@ import java.util.List;
  *
  * @author Alessandro Bono <alessandro.bono@edu.unito.it>
  */
-public class NounSmoother extends SmootherAbstract {
+public class OneOverNSmoother extends SmootherAbstract {
 
     private final List<String> knownTags = new ArrayList<>();
 
@@ -49,11 +49,7 @@ public class NounSmoother extends SmootherAbstract {
 
     @Override
     public double smooth(String tag, String word) {
-        int nTags = knownTags.size();
-        if (tag.equals("NOUN")) {
-            return (nTags - 1) / (double) nTags;
-        } else {
-            return 1 / (double) (nTags * (nTags - 1));
-        }
+        return 1 / (double) knownTags.size();
     }
+
 }

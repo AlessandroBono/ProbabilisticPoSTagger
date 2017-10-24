@@ -14,39 +14,20 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package it.unito.edu.bono.alessandro.smoother;
-
-import it.unito.edu.bono.alessandro.normalizer.Normalizer;
-import java.io.IOException;
+package it.unito.edu.bono.alessandro.ProbabilisticPoSTagger.smoother;
 
 /**
  *
  * @author Alessandro Bono <alessandro.bono@edu.unito.it>
  */
-public abstract class SmootherAbstract implements Smoother {
-
-    protected Normalizer normalizer = (String word) -> word;
-    protected String devSetPath;
-    protected String trainingSetPath;
+public class MinValueSmoother extends SmootherAbstract {
 
     @Override
-    public void setNormalizer(Normalizer normalizer) {
-        this.normalizer = normalizer;
+    public double smooth(String tag, String word) {
+        return 1 / (double) Integer.MAX_VALUE;
     }
 
     @Override
-    public void setDevSet(String devSetPath) {
-        this.devSetPath = devSetPath;
+    public void train() {
     }
-
-    @Override
-    public void setTrainingSet(String trainingSetPath) {
-        this.trainingSetPath = trainingSetPath;
-    }
-
-    @Override
-    public abstract void train() throws IOException;
-
-    @Override
-    public abstract double smooth(String tag, String word);
 }

@@ -14,13 +14,13 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package it.unito.edu.bono.alessandro;
+package it.unito.edu.bono.alessandro.ProbabilisticPoSTagger;
 
-import it.unito.edu.bono.alessandro.normalizer.LemmaNormalizer;
-import it.unito.edu.bono.alessandro.postagger.PoSTagger;
-import it.unito.edu.bono.alessandro.postagger.TrigramsPoSTagger;
-import it.unito.edu.bono.alessandro.smoother.MorphItSmoother;
-import it.unito.edu.bono.alessandro.util.Evaluator;
+import it.unito.edu.bono.alessandro.ProbabilisticPoSTagger.normalizer.LemmaNormalizer;
+import it.unito.edu.bono.alessandro.ProbabilisticPoSTagger.postagger.PoSTagger;
+import it.unito.edu.bono.alessandro.ProbabilisticPoSTagger.postagger.TrigramsPoSTagger;
+import it.unito.edu.bono.alessandro.ProbabilisticPoSTagger.smoother.MorphItSmoother;
+import it.unito.edu.bono.alessandro.ProbabilisticPoSTagger.util.Evaluator;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.logging.Level;

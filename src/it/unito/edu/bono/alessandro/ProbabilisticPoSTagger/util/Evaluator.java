@@ -14,9 +14,9 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package it.unito.edu.bono.alessandro.util;
+package it.unito.edu.bono.alessandro.ProbabilisticPoSTagger.util;
 
-import it.unito.edu.bono.alessandro.postagger.PoSTagger;
+import it.unito.edu.bono.alessandro.ProbabilisticPoSTagger.postagger.PoSTagger;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;

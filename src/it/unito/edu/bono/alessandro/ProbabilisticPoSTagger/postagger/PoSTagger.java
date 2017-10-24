@@ -14,20 +14,30 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package it.unito.edu.bono.alessandro.smoother;
+package it.unito.edu.bono.alessandro.ProbabilisticPoSTagger.postagger;
+
+import it.unito.edu.bono.alessandro.ProbabilisticPoSTagger.normalizer.Normalizer;
+import it.unito.edu.bono.alessandro.ProbabilisticPoSTagger.smoother.Smoother;
+import it.unito.edu.bono.alessandro.ProbabilisticPoSTagger.util.Pair;
+import java.io.IOException;
+import java.util.ArrayList;
 
 /**
  *
  * @author Alessandro Bono <alessandro.bono@edu.unito.it>
  */
-public class MinValueSmoother extends SmootherAbstract {
+public interface PoSTagger {
 
-    @Override
-    public double smooth(String tag, String word) {
-        return 1 / (double) Integer.MAX_VALUE;
-    }
+    public void setTrainingSet(String traningSetPath);
 
-    @Override
-    public void train() {
-    }
+    public void setDevSet(String devSetPath);
+
+    public void setNormalizer(Normalizer normalizer);
+
+    public void setSmoother(Smoother smoother);
+
+    public void train() throws IOException;
+
+    public ArrayList<Pair<String, String>> tagSentence(ArrayList<String> sentence);
+
 }

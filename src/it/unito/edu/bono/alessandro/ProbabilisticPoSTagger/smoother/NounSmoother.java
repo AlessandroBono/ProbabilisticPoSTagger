@@ -14,62 +14,46 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package it.unito.edu.bono.alessandro.postagger;
+package it.unito.edu.bono.alessandro.ProbabilisticPoSTagger.smoother;
 
-import it.unito.edu.bono.alessandro.util.Pair;
-import it.unito.edu.bono.alessandro.util.SparseMatrix;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
  * @author Alessandro Bono <alessandro.bono@edu.unito.it>
  */
-public class BaseLinePoSTagger extends PoSTaggerAbstract {
+public class NounSmoother extends SmootherAbstract {
 
-    private static final String DEFAULT_TAG = "NOUN";
-    private final SparseMatrix emissionMatrix = new SparseMatrix();
+    private final List<String> knownTags = new ArrayList<>();
 
     @Override
     public void train() throws IOException {
+        // count how many tags are present
         String line;
-        String tag;
         BufferedReader reader = new BufferedReader(new FileReader(trainingSetPath));
         while ((line = reader.readLine()) != null) {
             if (line.length() > 0) {
                 String[] temp = line.split("\t");
-                String word = temp[0];
-                tag = temp[1];
-                word = normalizer.normalize(word);
-                emissionMatrix.increment(tag, word);
+                String tag = temp[1];
+                if (!knownTags.contains(tag)) {
+                    knownTags.add(tag);
+                }
             }
         }
         reader.close();
     }
 
-    public String getMostFrequentTag(String word) {
-        word = normalizer.normalize(word);
-        String mostFreqTag = "";
-        int maxValue = 0;
-        for (String tag : emissionMatrix.getRows()) {
-            Integer value = emissionMatrix.get(tag, word);
-            if (value > maxValue) {
-                maxValue = value;
-                mostFreqTag = tag;
-            }
-        }
-        return maxValue != 0 ? mostFreqTag : DEFAULT_TAG;
-    }
-
     @Override
-    public ArrayList<Pair<String, String>> tagSentence(ArrayList<String> sentence) {
-        ArrayList<Pair<String, String>> output = new ArrayList<>();
-        for (String word : sentence) {
-            String tag = getMostFrequentTag(word);
-            output.add(new Pair(word, tag));
+    public double smooth(String tag, String word) {
+        int nTags = knownTags.size();
+        if (tag.equals("NOUN")) {
+            return (nTags - 1) / (double) nTags;
+        } else {
+            return 1 / (double) (nTags * (nTags - 1));
         }
-        return output;
     }
 }

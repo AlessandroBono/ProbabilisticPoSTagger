@@ -14,19 +14,25 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package it.unito.edu.bono.alessandro.util;
+package it.unito.edu.bono.alessandro.ProbabilisticPoSTagger.smoother;
+
+import it.unito.edu.bono.alessandro.ProbabilisticPoSTagger.normalizer.Normalizer;
+import java.io.IOException;
 
 /**
  *
  * @author Alessandro Bono <alessandro.bono@edu.unito.it>
  */
-public class CustomTag {
+public interface Smoother {
 
-    private CustomTag() {
+    public void setTrainingSet(String trainingSetPath);
 
-    }
+    public void setDevSet(String DevSetPath);
 
-    public static final String PRESTART = "PRESTART";
-    public static final String START = "START";
-    public static final String END = "END";
+    public void train() throws IOException;
+
+    public double smooth(String tag, String word);
+
+    public void setNormalizer(Normalizer normalizer);
+
 }

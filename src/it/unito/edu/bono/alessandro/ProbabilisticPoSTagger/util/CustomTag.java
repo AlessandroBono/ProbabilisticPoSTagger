@@ -14,40 +14,19 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package it.unito.edu.bono.alessandro.util;
-
-import java.util.HashMap;
-import java.util.Set;
+package it.unito.edu.bono.alessandro.ProbabilisticPoSTagger.util;
 
 /**
  *
  * @author Alessandro Bono <alessandro.bono@edu.unito.it>
  */
-public class CustomArray {
+public class CustomTag {
 
-    private final HashMap<String, Integer> array = new HashMap<>();
+    private CustomTag() {
 
-    public void set(String idx, int value) {
-        array.put(idx, value);
     }
 
-    public int get(String idx) {
-        if (!array.containsKey(idx)) {
-            return 0;
-        }
-        return array.get(idx);
-    }
-
-    public Set<String> getIdexes() {
-        return array.keySet();
-    }
-
-    public void increment(String idx) {
-        increment(idx, 1);
-    }
-
-    public void increment(String idx, int value) {
-        int oldValue = get(idx);
-        set(idx, oldValue + value);
-    }
+    public static final String PRESTART = "PRESTART";
+    public static final String START = "START";
+    public static final String END = "END";
 }

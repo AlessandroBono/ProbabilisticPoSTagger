@@ -14,25 +14,13 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package it.unito.edu.bono.alessandro.smoother;
-
-import it.unito.edu.bono.alessandro.normalizer.Normalizer;
-import java.io.IOException;
+package it.unito.edu.bono.alessandro.ProbabilisticPoSTagger.normalizer;
 
 /**
  *
  * @author Alessandro Bono <alessandro.bono@edu.unito.it>
  */
-public interface Smoother {
+public interface Normalizer {
 
-    public void setTrainingSet(String trainingSetPath);
-
-    public void setDevSet(String DevSetPath);
-
-    public void train() throws IOException;
-
-    public double smooth(String tag, String word);
-
-    public void setNormalizer(Normalizer normalizer);
-
+    public String normalize(String word);
 }

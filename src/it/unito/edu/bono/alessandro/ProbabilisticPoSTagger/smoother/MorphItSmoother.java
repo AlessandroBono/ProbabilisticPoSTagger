@@ -14,10 +14,10 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package it.unito.edu.bono.alessandro.smoother;
+package it.unito.edu.bono.alessandro.ProbabilisticPoSTagger.smoother;
 
-import it.unito.edu.bono.alessandro.util.CustomArray;
-import it.unito.edu.bono.alessandro.util.SparseMatrix;
+import it.unito.edu.bono.alessandro.ProbabilisticPoSTagger.util.CustomArray;
+import it.unito.edu.bono.alessandro.ProbabilisticPoSTagger.util.SparseMatrix;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
